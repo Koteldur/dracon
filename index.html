@@ -321,123 +321,148 @@
         .md-sidebar-toc {
         display: none;
       }
-      pre {
-        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-        direction: ltr;
+      code[class*="language-"],
+      pre[class*="language-"] {
+        color: #333;
+        background: 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
         text-align: left;
         white-space: pre;
         word-spacing: normal;
         word-break: normal;
-        padding: 1em;
-        margin: 0.5em 0;
-        overflow: auto;
-        line-height: 1.5;
-        tab-size: 4;
+        word-wrap: normal;
+        line-height: 1.4;
+        -moz-tab-size: 8;
+        -o-tab-size: 8;
+        tab-size: 8;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
         hyphens: none;
-        color: #555;
-        background-color: #f0f0f0 !important;
-        border: #d6d6d6;
-        border-radius: 3px;
       }
       pre[class*="language-"] {
-        padding: 1em;
+        padding: 0.8em;
+        overflow: auto;
+        border-radius: 3px;
+        background: #f5f5f5;
       }
-      code[class*="language-"] .token.cdata,
-      code[class*="language-"] .token.comment,
-      code[class*="language-"] .token.doctype,
-      code[class*="language-"] .token.prolog,
-      pre[class*="language-"] .token.cdata,
-      pre[class*="language-"] .token.comment,
-      pre[class*="language-"] .token.doctype,
-      pre[class*="language-"] .token.prolog {
-        color: #998;
-        font-style: italic;
+      :not(pre) > code[class*="language-"] {
+        padding: 0.1em;
+        border-radius: 0.3em;
+        white-space: normal;
+        background: #f5f5f5;
       }
-      code[class*="language-"] .token.punctuation,
-      pre[class*="language-"] .token.punctuation {
-        color: #920b2d;
+      .token.blockquote,
+      .token.comment {
+        color: #969896;
       }
-      code[class*="language-"] .namespace,
-      pre[class*="language-"] .namespace {
-        opacity: 0.7;
+      .token.cdata {
+        color: #183691;
       }
-      code[class*="language-"] .token.property,
-      pre[class*="language-"] .token.property {
-        font-weight: 700;
+      .token.doctype,
+      .token.macro.property,
+      .token.punctuation,
+      .token.variable {
         color: #333;
       }
-      code[class*="language-"] .token.boolean,
-      code[class*="language-"] .token.function-name,
-      code[class*="language-"] .token.number,
-      pre[class*="language-"] .token.boolean,
-      pre[class*="language-"] .token.function-name,
-      pre[class*="language-"] .token.number {
-        color: #d14;
+      .token.builtin,
+      .token.important,
+      .token.keyword,
+      .token.operator,
+      .token.rule {
+        color: #a71d5d;
       }
-      code[class*="language-"] .token.tag,
-      pre[class*="language-"] .token.tag {
-        color: #d14;
+      .token.attr-value,
+      .token.regex,
+      .token.string,
+      .token.url {
+        color: #183691;
       }
-      code[class*="language-"] .token.symbol,
-      pre[class*="language-"] .token.symbol {
-        color: #990073;
+      .token.atrule,
+      .token.boolean,
+      .token.code,
+      .token.command,
+      .token.constant,
+      .token.entity,
+      .token.number,
+      .token.property,
+      .token.symbol {
+        color: #0086b3;
       }
-      code[class*="language-"] .token.selector,
-      pre[class*="language-"] .token.selector {
-        color: teal;
+      .token.prolog,
+      .token.selector,
+      .token.tag {
+        color: #63a35c;
       }
-      code[class*="language-"] .token.attr-name,
-      pre[class*="language-"] .token.attr-name {
-        color: #458;
+      .token.attr-name,
+      .token.class,
+      .token.class-name,
+      .token.function,
+      .token.id,
+      .token.namespace,
+      .token.pseudo-class,
+      .token.pseudo-element,
+      .token.url-reference .token.variable {
+        color: #795da3;
+      }
+      .token.entity {
+        cursor: help;
+      }
+      .token.title,
+      .token.title .token.punctuation {
+        font-weight: 700;
+        color: #1d3e81;
+      }
+      .token.list {
+        color: #ed6a43;
+      }
+      .token.inserted {
+        background-color: #eaffea;
+        color: #55a532;
+      }
+      .token.deleted {
+        background-color: #ffecec;
+        color: #bd2c00;
+      }
+      .token.bold {
         font-weight: 700;
       }
-      code[class*="language-"] .token.string,
-      pre[class*="language-"] .token.string {
-        color: #d14;
-      }
-      code[class*="language-"] .token.char,
-      pre[class*="language-"] .token.char {
-        color: #606aa1;
-      }
-      code[class*="language-"] .token.url,
-      pre[class*="language-"] .token.url {
-        color: #888;
-      }
-      code[class*="language-"] .token.atrule,
-      code[class*="language-"] .token.attr-value,
-      code[class*="language-"] .token.keyword,
-      pre[class*="language-"] .token.atrule,
-      pre[class*="language-"] .token.attr-value,
-      pre[class*="language-"] .token.keyword {
-        color: #222;
-        font-weight: 700;
-      }
-      code[class*="language-"] .token.function,
-      pre[class*="language-"] .token.function {
-        color: #900;
-      }
-      code[class*="language-"] .token.class-name,
-      pre[class*="language-"] .token.class-name {
-        text-decoration: underline;
-        color: #606aa1;
-      }
-      code[class*="language-"] .token.variable,
-      pre[class*="language-"] .token.variable {
-        color: teal;
-      }
-      code[class*="language-"] .token.bold,
-      code[class*="language-"] .token.important,
-      pre[class*="language-"] .token.bold,
-      pre[class*="language-"] .token.important {
-        font-weight: 700;
-      }
-      code[class*="language-"] .token.italic,
-      pre[class*="language-"] .token.italic {
+      .token.italic {
         font-style: italic;
       }
-      code[class*="language-"] .token.entity,
-      pre[class*="language-"] .token.entity {
-        cursor: help;
+      .language-json .token.property {
+        color: #183691;
+      }
+      .language-markup .token.tag .token.punctuation {
+        color: #333;
+      }
+      .language-css .token.function,
+      code.language-css {
+        color: #0086b3;
+      }
+      .language-yaml .token.atrule {
+        color: #63a35c;
+      }
+      code.language-yaml {
+        color: #183691;
+      }
+      .language-ruby .token.function {
+        color: #333;
+      }
+      .language-markdown .token.url {
+        color: #795da3;
+      }
+      .language-makefile .token.symbol {
+        color: #795da3;
+      }
+      .language-makefile .token.variable {
+        color: #183691;
+      }
+      .language-makefile .token.builtin {
+        color: #0086b3;
+      }
+      .language-bash .token.keyword {
+        color: #0086b3;
       }
       pre[data-line] {
         position: relative;
@@ -492,289 +517,220 @@
       .emoji {
         height: 0.8em;
       }
-      html body {
-        font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans,
-          sans-serif;
-        font-size: 16px;
-        line-height: 1.6;
-        color: #555;
-        background-color: #fff;
-        overflow: initial;
-        box-sizing: border-box;
-        word-wrap: break-word;
-      }
-      html body > :first-child {
-        margin-top: 0;
-      }
-      html body h1,
-      html body h2,
-      html body h3,
-      html body h4,
-      html body h5,
-      html body h6 {
-        line-height: 1.2;
-        margin-top: 1em;
-        margin-bottom: 16px;
-        color: #030303;
-      }
-      html body h1 {
-        font-size: 2.25em;
-        font-weight: 300;
-        padding-bottom: 0.3em;
-      }
-      html body h2 {
-        font-size: 1.75em;
+      @font-face {
+        font-family: Raleway;
+        font-style: italic;
         font-weight: 400;
-        padding-bottom: 0.3em;
+        src: url(https://fonts.gstatic.com/s/raleway/v34/1Pt_g8zYS_SKggPNyCgSQamb1W0lwk4S4WjMDrMfJQ.ttf)
+          format("truetype");
       }
-      html body h3 {
-        font-size: 1.5em;
-        font-weight: 500;
-      }
-      html body h4 {
-        font-size: 1.25em;
-        font-weight: 600;
-      }
-      html body h5 {
-        font-size: 1.1em;
-        font-weight: 600;
-      }
-      html body h6 {
-        font-size: 1em;
-        font-weight: 600;
-      }
-      html body h1,
-      html body h2,
-      html body h3,
-      html body h4,
-      html body h5 {
-        font-weight: 600;
-      }
-      html body h5 {
-        font-size: 1em;
-      }
-      html body h6 {
-        color: #7e7e7e;
-      }
-      html body strong {
-        color: #030303;
-      }
-      html body del {
-        color: #7e7e7e;
-      }
-      html body a:not([href]) {
-        color: inherit;
-        text-decoration: none;
-      }
-      html body a {
-        color: #08c;
-        text-decoration: none;
-      }
-      html body a:hover {
-        color: #00a3f5;
-        text-decoration: none;
-      }
-      html body img {
-        max-width: 100%;
-      }
-      html body > p {
-        margin-top: 0;
-        margin-bottom: 16px;
-        word-wrap: break-word;
-      }
-      html body > ol,
-      html body > ul {
-        margin-bottom: 16px;
-      }
-      html body ol,
-      html body ul {
-        padding-left: 2em;
-      }
-      html body ol.no-list,
-      html body ul.no-list {
-        padding: 0;
-        list-style-type: none;
-      }
-      html body ol ol,
-      html body ol ul,
-      html body ul ol,
-      html body ul ul {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-      html body li {
-        margin-bottom: 0;
-      }
-      html body li.task-list-item {
-        list-style: none;
-      }
-      html body li > p {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-      html body .task-list-item-checkbox {
-        margin: 0 0.2em 0.25em -1.8em;
-        vertical-align: middle;
-      }
-      html body .task-list-item-checkbox:hover {
-        cursor: pointer;
-      }
-      html body blockquote {
-        margin: 16px 0;
-        font-size: inherit;
-        padding: 0 15px;
-        color: #7e7e7e;
-        background-color: #f0f0f0;
-        border-left: 4px solid #d6d6d6;
-      }
-      html body blockquote > :first-child {
-        margin-top: 0;
-      }
-      html body blockquote > :last-child {
-        margin-bottom: 0;
-      }
-      html body hr {
-        height: 4px;
-        margin: 32px 0;
-        background-color: #d6d6d6;
-        border: 0 none;
-      }
-      html body table {
-        margin: 10px 0 15px 0;
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: block;
-        width: 100%;
-        overflow: auto;
-        word-break: normal;
-        word-break: keep-all;
-      }
-      html body table th {
-        font-weight: 700;
-        color: #030303;
-      }
-      html body table td,
-      html body table th {
-        border: 1px solid #d6d6d6;
-        padding: 6px 13px;
-      }
-      html body dl {
-        padding: 0;
-      }
-      html body dl dt {
-        padding: 0;
-        margin-top: 16px;
-        font-size: 1em;
+      @font-face {
+        font-family: Raleway;
         font-style: italic;
         font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/raleway/v34/1Pt_g8zYS_SKggPNyCgSQamb1W0lwk4S4Y_LDrMfJQ.ttf)
+          format("truetype");
       }
-      html body dl dd {
-        padding: 0 16px;
-        margin-bottom: 16px;
+      @font-face {
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/raleway/v34/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrQ.ttf)
+          format("truetype");
       }
-      html body code {
-        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-        font-size: 0.85em;
-        color: #030303;
-        background-color: #f0f0f0;
-        border-radius: 3px;
-        padding: 0.2em 0;
+      @font-face {
+        font-family: Raleway;
+        font-style: normal;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/raleway/v34/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVs9pbCIPrQ.ttf)
+          format("truetype");
       }
-      html body code::after,
-      html body code::before {
-        letter-spacing: -0.2em;
-        content: "\00a0";
+      body {
+        background: #fcfcfc;
+        color: #111;
+        font-family: Raleway, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
       }
-      html body pre > code {
-        padding: 0;
-        margin: 0;
-        word-break: normal;
-        white-space: pre;
-        background: 0 0;
-        border: 0;
+      body .math,
+      body .mathjax-exps,
+      body h1,
+      body h2,
+      body h3,
+      body h4,
+      body h5,
+      body h6,
+      body li,
+      body table {
+        color: #111;
+        font-family: Raleway, sans-serif;
       }
-      html body .highlight {
-        margin-bottom: 16px;
+      body h1 {
+        font-weight: 400;
+        line-height: 4rem;
+        margin: 0 0 1.75rem;
+        padding: 20px 30px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 4rem;
       }
-      html body .highlight pre,
-      html body pre {
-        padding: 1em;
-        overflow: auto;
-        line-height: 1.45;
-        border: #d6d6d6;
-        border-radius: 3px;
+      body h2 {
+        font-weight: 400;
+        line-height: 3rem;
+        margin: 0 0 1.9375rem;
+        padding: 0 30px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 3rem;
       }
-      html body .highlight pre {
-        margin-bottom: 0;
-        word-break: normal;
+      body h3 {
+        font-weight: 400;
       }
-      html body pre code,
-      html body pre tt {
-        display: inline;
-        max-width: initial;
-        padding: 0;
-        margin: 0;
-        overflow: initial;
-        line-height: inherit;
-        word-wrap: normal;
-        background-color: transparent;
-        border: 0;
+      body h4 {
+        font-weight: 400;
       }
-      html body pre code:after,
-      html body pre code:before,
-      html body pre tt:after,
-      html body pre tt:before {
-        content: normal;
+      body h5 {
+        font-size: 1.125rem;
+        font-weight: 400;
       }
-      html body blockquote,
-      html body dl,
-      html body ol,
-      html body p,
-      html body pre,
-      html body ul {
+      body h6 {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      body p {
+        color: #111;
+        font-size: 1rem;
+        line-height: 1.75rem;
+        margin: 0 0 1.25rem;
+      }
+      body blockquote {
+        margin-left: 1rem;
+        margin-right: 0;
+        padding: 0.5em;
+      }
+      body h1 {
+        font-size: 2.827rem;
+      }
+      body h2 {
+        font-size: 1.999rem;
+      }
+      body h3 {
+        font-size: 1.413rem;
+      }
+      body h4 {
+        font-size: 1.25rem;
+      }
+      body h5 {
+        font-size: 1.15rem;
+      }
+      body h6 {
+        font-size: 1rem;
+      }
+      body a {
+        color: #900;
+        text-decoration: none;
+      }
+      body a:hover {
+        text-decoration: underline;
+      }
+      body table {
+        margin-bottom: 20px;
+      }
+      body table td,
+      body table th {
+        padding: 8px;
+        line-height: 1.25rem;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+      body table th {
+        font-weight: 700;
+      }
+      body table thead th {
+        vertical-align: bottom;
+      }
+      body table caption + thead tr:first-child td,
+      body table caption + thead tr:first-child th,
+      body table colgroup + thead tr:first-child td,
+      body table colgroup + thead tr:first-child th,
+      body table thead:first-child tr:first-child td,
+      body table thead:first-child tr:first-child th {
+        border-top: 0;
+      }
+      body table tbody + tbody {
+        border-top: 2px solid #ddd;
+      }
+      body code {
+        padding: 0.5em;
+        color: inherit;
+        border: 1px solid #ccc;
+        padding: 0.1em;
+        font-size: 0.9em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+      }
+      body pre > code {
+        border: none;
+      }
+      body li > p {
         margin-top: 0;
-        margin-bottom: 16px;
+        margin-bottom: 0;
       }
-      html body kbd {
-        color: #030303;
-        border: 1px solid #d6d6d6;
-        border-bottom: 2px solid #c7c7c7;
-        padding: 2px 4px;
-        background-color: #f0f0f0;
-        border-radius: 3px;
+      body .task-list {
+        padding-left: 0;
       }
-      @media print {
-        html body {
-          background-color: #fff;
+      body .task-list-item {
+        list-style: none;
+        margin-left: -2.4em;
+      }
+      body .task-list-item input {
+        top: 3px;
+        margin-right: 1.6em;
+      }
+      body .task-list-item input:before {
+        content: "";
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: middle;
+        text-align: center;
+        border: 1px solid gray;
+        background-color: #fdfdfd;
+        margin-left: 0;
+        margin-top: -0.8rem;
+      }
+      body .task-list-item input:checked:before,
+      body .task-list-item input[checked]:before {
+        content: "\25FC";
+        font-size: 0.8125rem;
+        line-height: 0.9375rem;
+        margin-top: -1rem;
+      }
+      @media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+        body .task-list-item input:before {
+          margin-top: -0.2rem;
         }
-        html body h1,
-        html body h2,
-        html body h3,
-        html body h4,
-        html body h5,
-        html body h6 {
-          color: #030303;
-          page-break-after: avoid;
+        body .task-list-item input:checked:before,
+        body .task-list-item input[checked]:before {
+          margin-top: -0.2rem;
         }
-        html body blockquote {
-          color: #7e7e7e;
-        }
-        html body pre {
-          page-break-inside: avoid;
-        }
-        html body table {
-          display: table;
-        }
-        html body img {
-          display: block;
-          max-width: 100%;
-          max-height: 100%;
-        }
-        html body code,
-        html body pre {
-          word-wrap: break-word;
-          white-space: pre;
-        }
+      }
+      body blockquote {
+        margin: 0 0 1.11111rem;
+        padding: 0.5rem 1.11111rem 0 1.05556rem;
+        border-left: 1px solid gray;
+        background-color: #ededed;
+      }
+      body blockquote,
+      body blockquote p {
+        line-height: 1.6;
+        color: #6f6f6f;
+      }
+      body img {
+        max-width: 100%;
+      }
+      body kbd {
+        color: #111;
       }
       /* Please visit the URL below for more information: */
       /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
@@ -821,11 +777,11 @@
               creatividad.
             </p>
             <h2
-              id="2-creación-de-aventurero"
+              id="2-creación-de-personaje"
               ebook-toc-level-2=""
-              heading="<strong>2. Creación de Aventurero</strong> "
+              heading="<strong>2. Creación de personaje</strong> "
             >
-              <strong>2. Creación de Aventurero</strong>
+              <strong>2. Creación de personaje</strong>
             </h2>
             <hr />
             <h3
@@ -836,12 +792,12 @@
               <strong>2.1 Nombre y Trasfondo</strong>
             </h3>
             <p>
-              Tu historia comienza con una simple pregunta:
-              <strong>¿Quién eres?</strong><br />
-              Después de nombrar a tu aventurero, dale un trasfondo que
-              determine las motivaciones que impulsan sus acciones.<br />
+              Tu historia comienza con una simple pregunta: ¿Quién es tu
+              personaje?<br />
+              Después de nombrar a tu personaje, dale un trasfondo que determine
+              las motivaciones que impulsan sus acciones.<br />
               <em
-                >Los aventureros no están limitados por clases predefinidas; su
+                >Los personajes no están limitados por clases predefinidas; su
                 identidad y habilidades se determinan por lo que llevan y cómo
                 lo usan.</em
               >
@@ -855,8 +811,8 @@
             </h3>
             <p>
               Elige un paquete de características, puedes asignar directamente
-              estos valores predeterminados basado en la orientación de tu
-              aventurero.
+              estos valores predeterminados basándote en la orientación de tu
+              personaje.
             </p>
             <table>
               <thead>
@@ -941,11 +897,11 @@
             >
               <strong>2.3 Equipo Inicial</strong>
             </h3>
-            <p>Tu aventurero comienza con:</p>
+            <p>Tu personaje comienza con:</p>
             <ul>
               <li>
-                <strong>Dos armas de su elección:</strong> (Puedes construirla
-                en el <strong>Constructor de Armas</strong>).
+                <strong>Elige dos armas de su elección:</strong> (Puedes
+                construirla en el <strong>Constructor de Armas</strong>).
               </li>
               <li>
                 <strong>Equipo inicial:</strong> (Según la lista de
@@ -965,8 +921,8 @@
               <strong>2.4 Espacios de Inventario</strong>
             </h3>
             <p>
-              Tu aventurero tiene <strong>15 espacios</strong> en su inventario
-              para llevar sus objetos.
+              Tu personaje tiene <strong>15 espacios</strong> en su mochila para
+              llevar objetos.
             </p>
             <ul>
               <li>
@@ -977,7 +933,7 @@
                 Los objetos pequeños <strong>no ocupan espacio</strong> (por
                 ejemplo, monedas).<br />
                 <em
-                  >Si tu aventurero encuentra un antiguo amuleto y varias
+                  >Si tu personaje encuentra un antiguo amuleto y varias
                   pociones, deberás decidir cuáles son esenciales para la
                   supervivencia.</em
                 >
@@ -992,7 +948,7 @@
             </h3>
             <p>
               La <strong>Clase de Armadura (CA)</strong> representa la defensa
-              de tu aventurero y la dificultad que tienen los enemigos para
+              de tu personaje y la dificultad que tienen los enemigos para
               golpearlo. Una CA más alta significa una mejor protección.
             </p>
             <table>
@@ -1048,7 +1004,7 @@
               portador.
             </p>
             <p>
-              Cuando un aventurero no usa armadura su CA será (10 + su
+              Cuando tu personaje no usa armadura su CA será (10 + su
               bonificación de destreza).
             </p>
             <h2
@@ -1071,18 +1027,18 @@
             <ol>
               <li>
                 <strong>Lanza 1d20</strong> y suma el Bonificador de
-                Característica.
+                Característica de tu personaje.
               </li>
               <li>
-                Si el resultado es igual o mayor a la CD,
-                <strong>tienes éxito</strong>.
+                Si el resultado es igual o mayor a la CD, tu
+                <strong>personaje tiene éxito</strong>.
               </li>
               <li>
                 El DM define qué característica es adecuada para la prueba.<br />
                 <em
                   >Para trepar una muralla en ruinas, el DM puede requerir una
-                  prueba de Destreza con CD 15. Si tu aventurero tiene una
-                  bonificación de +3 y sacas un 13 en el dado, alcanzas el
+                  prueba de Destreza con CD 15. Si tu personaje tiene una
+                  bonificación de +3 y tú sacas un 13 en el dado, él alcanza el
                   éxito.</em
                 >
               </li>
@@ -1104,7 +1060,7 @@
             </h3>
             <ul>
               <li>
-                Los jugadores <strong>siempre actúan primero</strong>, excepto
+                Los personajes <strong>siempre actúan primero</strong>, excepto
                 en emboscadas.
               </li>
             </ul>
@@ -1116,7 +1072,7 @@
               <strong>4.2 Acciones en el Turno</strong>
             </h3>
             <p>
-              En su turno, tu aventurero puede realizar diversas acciones, como:
+              En tu turno, tu personaje puede realizar diversas acciones, como:
             </p>
             <ul>
               <li><strong>Moverse</strong>.</li>
@@ -1150,8 +1106,9 @@
               </li>
               <li>
                 Si el resultado es <strong>igual o mayor</strong> que la CA del
-                objetivo, el ataque acierta y se tira el daño de arma.<br />
-                Si un aventurero ataca con un modificador de +4 y saca un
+                objetivo, el ataque de tu personaje acierta y debes tirar el
+                daño de arma.<br />
+                Si un personaje ataca con un modificador de +4 y saca un
                 <strong>12</strong> en el d20, su total es
                 <strong>16</strong>.<br />
                 Si el enemigo tiene <strong>CA 14</strong>, el ataque
@@ -1223,8 +1180,9 @@
             <p>
               Las distancias se manejan de manera intuitiva y simple para
               facilitar la narrativa y el flujo del juego. Los jugadores evalúan
-              la distancia en términos de su capacidad para interactuar con
-              enemigos o elementos en el entorno, como se describe aquí:
+              la distancia en términos de la capacidad para interactuar de los
+              personajes con enemigos o elementos en el entorno, como se
+              describe aquí:
             </p>
             <ul>
               <li>
@@ -1312,7 +1270,8 @@
                 <strong>Tu puntuación de característica más alto</strong>:
               </li>
               <li>
-                <strong>Compara el resultado con la CA del objetivo.</strong>
+                <strong>Compara el resultado con la CA del objetivo</strong>
+                para saber si el ataque de tu personaje acierta.
               </li>
               <li>
                 Si el resultado es <strong>igual o mayor</strong> que la CA del
@@ -1327,26 +1286,14 @@
             >
               <strong>7.2 Para lanzar un hechizo de utilidad</strong>
             </h3>
-            <ol>
-              <li>
-                <strong>Lanza 1d20</strong> y suma el bonificador de
-                <strong>Tu puntuación de característica más alto</strong>:
-              </li>
-              <li>
-                <strong
-                  >Compara el resultado con tu puntuación puntuación de
-                  característica más alto</strong
-                >
-              </li>
-              <li>
-                Para lanzar un hechizo de utilidad, el jugador tira 1d20 y suma
-                el modificador de su característica más alta. Si el resultado es
-                <strong>igual o mayor</strong> que el valor de esa
-                característica, el hechizo se ejecuta con éxito. Si falla, no
-                surte efecto; si el resultado es un 1 natural, el fallo crítico
-                puede desencadenar peligros graves según el criterio del DM.
-              </li>
-            </ol>
+            <p>
+              Para lanzar un hechizo de utilidad, el jugador tira 1d20 y suma el
+              bonificador de su característica más alta. Si el resultado es
+              <strong>igual o mayor</strong> que el valor de esa característica,
+              el hechizo se ejecuta con éxito. Si falla, no surte efecto; si el
+              resultado es un 1 natural, el fallo crítico puede desencadenar
+              peligros graves según el criterio del DM.
+            </p>
             <h2
               id="8-descanso"
               ebook-toc-level-2=""
@@ -1366,19 +1313,19 @@
               <li>
                 <p><strong>Descanso Breve</strong></p>
                 <ul>
-                  <li>Recupera 1d4 PG</li>
-                  <li>Recupera 1d2 hechizos</li>
+                  <li>El personaje recupera 2d8 PG</li>
+                  <li>El personaje recupera 1d4 hechizos</li>
                   <li>Limitado a 1 vez entre descansos completos</li>
                 </ul>
               </li>
               <li>
                 <p><strong>Descanso Completo</strong></p>
                 <ul>
-                  <li>Da por finalizada la escena actual</li>
-                  <li>Recupera 2d4 PG</li>
-                  <li>Recupera 1d4 hechizos</li>
+                  <li>El DM da por finalizada la escena actual</li>
+                  <li>El personaje recupera 2d10 PG</li>
+                  <li>El personaje recupera 1d6 hechizos</li>
                   <li>Limitado a 1 vez entre descansos prolongados</li>
-                  <li>Requiere un refugio seguro</li>
+                  <li>Se requiere un refugio seguro</li>
                 </ul>
               </li>
               <li>
@@ -1386,11 +1333,12 @@
               </li>
               <li>
                 <ul>
-                  <li>Da por finalizada la aventura actual</li>
-                  <li>Recupera todos los PG</li>
-                  <li>Recupera todos los hechizos</li>
+                  <li>El DM da por finalizada la aventura actual</li>
+                  <li>El personaje recupera todos los PG</li>
+                  <li>El personaje recupera todos los hechizos</li>
                   <li>
-                    Requiere un asentamiento civilizado (pueblo, ciudad, posada)
+                    Se requiere un asentamiento civilizado (pueblo, ciudad,
+                    taberna)
                   </li>
                 </ul>
               </li>
@@ -1403,13 +1351,13 @@
               <strong>8.1 Qué constituye un refugio seguro</strong>
             </h3>
             <ul>
-              <li>Un asentamiento civilizado (pueblo, ciudad, posada)</li>
+              <li>Un asentamiento civilizado (pueblo, ciudad, taberna)</li>
               <li>
                 Una zona específicamente protegida (templo consagrado, refugio
                 sellado)
               </li>
               <li>
-                Un área que ha sido totalmente asegurada por los aventureros
+                Un área que ha sido totalmente asegurada por los personajes
                 (todos los monstruos eliminados, entradas bloqueadas/vigiladas)
               </li>
               <li>
@@ -1646,9 +1594,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -1716,9 +1664,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -1754,9 +1702,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -1829,9 +1777,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -1887,9 +1835,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -1951,9 +1899,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -2022,9 +1970,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -2093,9 +2041,9 @@
             </h4>
             <ul>
               <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Sagrado, Luz, Oscuridad,
-                Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo, Vacío,
-                Caos.
+                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
+                Tiempo, Vacío, Caos.
               </li>
             </ul>
             <h4
@@ -2146,7 +2094,11 @@
             >
               <strong>12. Constructor de Monstruos</strong>
             </h2>
-            <p>Plantillas para la creación de monstruos</p>
+            <p>
+              Plantillas para la creación de monstruos. Puedes usar el
+              <strong>Constructor de Hechizos</strong> para darle a cada
+              monstruo sus habilidades magicas.
+            </p>
             <p>
               <strong>Esbirros:</strong><br />
               <strong>CA:</strong> 4 | <strong>PG:</strong> 5 (x Cantidad de
@@ -2226,8 +2178,8 @@
             </h3>
             <ul>
               <li>
-                Los jugadores investigan el entorno, buscan pistas y deciden qué
-                hacer.
+                Los personajes investigan el entorno, buscan pistas y deciden
+                qué hacer.
               </li>
               <li>
                 Ejemplo: Examinar una habitación en busca de trampas o hablar
@@ -2242,7 +2194,7 @@
               Escenas de combate o acción
             </h3>
             <ul>
-              <li>Más estructuradas: los jugadores actúan por turnos.</li>
+              <li>Más estructuradas: los personajes actúan por turnos.</li>
               <li>
                 Cada turno permite realizar
                 <strong>una acción específica</strong>, como atacar, usar una
