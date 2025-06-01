@@ -1,2781 +1,1041 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
-    <title>Dracon</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      .markdown-preview {
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-      }
-      .markdown-preview ul {
-        list-style: disc;
-      }
-      .markdown-preview ul ul {
-        list-style: circle;
-      }
-      .markdown-preview ul ul ul {
-        list-style: square;
-      }
-      .markdown-preview ol {
-        list-style: decimal;
-      }
-      .markdown-preview ol ol,
-      .markdown-preview ul ol {
-        list-style-type: lower-roman;
-      }
-      .markdown-preview ol ol ol,
-      .markdown-preview ol ul ol,
-      .markdown-preview ul ol ol,
-      .markdown-preview ul ul ol {
-        list-style-type: lower-alpha;
-      }
-      .markdown-preview .newpage,
-      .markdown-preview .pagebreak {
-        page-break-before: always;
-      }
-      .markdown-preview pre.line-numbers {
-        position: relative;
-        padding-left: 3.8em;
-        counter-reset: linenumber;
-      }
-      .markdown-preview pre.line-numbers > code {
-        position: relative;
-      }
-      .markdown-preview pre.line-numbers .line-numbers-rows {
-        position: absolute;
-        pointer-events: none;
-        top: 1em;
-        font-size: 100%;
-        left: 0;
-        width: 3em;
-        letter-spacing: -1px;
-        border-right: 1px solid #999;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      .markdown-preview pre.line-numbers .line-numbers-rows > span {
-        pointer-events: none;
-        display: block;
-        counter-increment: linenumber;
-      }
-      .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
-        content: counter(linenumber);
-        color: #999;
-        display: block;
-        padding-right: 0.8em;
-        text-align: right;
-      }
-      .markdown-preview .mathjax-exps .MathJax_Display {
-        text-align: center !important;
-      }
-      .markdown-preview:not([data-for="preview"])
-        .code-chunk
-        .code-chunk-btn-group {
-        display: none;
-      }
-      .markdown-preview:not([data-for="preview"]) .code-chunk .status {
-        display: none;
-      }
-      .markdown-preview:not([data-for="preview"]) .code-chunk .output-div {
-        margin-bottom: 16px;
-      }
-      .markdown-preview .md-toc {
-        padding: 0;
-      }
-      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
-        display: inline;
-        padding: 0.25rem 0;
-      }
-      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,
-      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p {
-        display: inline;
-      }
-      .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
-        font-weight: 800;
-      }
-      .scrollbar-style::-webkit-scrollbar {
-        width: 8px;
-      }
-      .scrollbar-style::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background-color: transparent;
-      }
-      .scrollbar-style::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background-color: rgba(150, 150, 150, 0.66);
-        border: 4px solid rgba(150, 150, 150, 0.66);
-        background-clip: content-box;
-      }
-      html body[for="html-export"]:not([data-presentation-mode]) {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 0;
-        overflow: auto;
-      }
-      html
-        body[for="html-export"]:not([data-presentation-mode])
-        .markdown-preview {
-        position: relative;
-        top: 0;
-        min-height: 100vh;
-      }
-      @media screen and (min-width: 914px) {
-        html
-          body[for="html-export"]:not([data-presentation-mode])
-          .markdown-preview {
-          padding: 2em calc(50% - 457px + 2em);
-        }
-      }
-      @media screen and (max-width: 914px) {
-        html
-          body[for="html-export"]:not([data-presentation-mode])
-          .markdown-preview {
-          padding: 2em;
-        }
-      }
-      @media screen and (max-width: 450px) {
-        html
-          body[for="html-export"]:not([data-presentation-mode])
-          .markdown-preview {
-          font-size: 14px !important;
-          padding: 1em;
-        }
-      }
-      @media print {
-        html
-          body[for="html-export"]:not([data-presentation-mode])
-          #sidebar-toc-btn {
-          display: none;
-        }
-      }
-      html
-        body[for="html-export"]:not([data-presentation-mode])
-        #sidebar-toc-btn {
-        position: fixed;
-        bottom: 8px;
-        left: 8px;
-        font-size: 28px;
-        cursor: pointer;
-        color: inherit;
-        z-index: 99;
-        width: 32px;
-        text-align: center;
-        opacity: 0.4;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        #sidebar-toc-btn {
-        opacity: 1;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 300px;
-        height: 100%;
-        padding: 32px 0 48px 0;
-        font-size: 14px;
-        box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
-        box-sizing: border-box;
-        overflow: auto;
-        background-color: inherit;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc::-webkit-scrollbar {
-        width: 8px;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background-color: transparent;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background-color: rgba(150, 150, 150, 0.66);
-        border: 4px solid rgba(150, 150, 150, 0.66);
-        background-clip: content-box;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        a {
-        text-decoration: none;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        .md-toc {
-        padding: 0 16px;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        .md-toc
-        .md-toc-link-wrapper
-        .md-toc-link {
-        display: inline;
-        padding: 0.25rem 0;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        .md-toc
-        .md-toc-link-wrapper
-        .md-toc-link
-        div,
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        .md-toc
-        .md-toc-link-wrapper
-        .md-toc-link
-        p {
-        display: inline;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .md-sidebar-toc
-        .md-toc
-        .md-toc-link-wrapper.highlighted
-        .md-toc-link {
-        font-weight: 800;
-      }
-      html
-        body[for="html-export"]:not(
-          [data-presentation-mode]
-        )[html-show-sidebar-toc]
-        .markdown-preview {
-        left: 300px;
-        width: calc(100% - 300px);
-        padding: 2em calc(50% - 457px - 300px / 2);
-        margin: 0;
-        box-sizing: border-box;
-      }
-      @media screen and (max-width: 1274px) {
-        html
-          body[for="html-export"]:not(
-            [data-presentation-mode]
-          )[html-show-sidebar-toc]
-          .markdown-preview {
-          padding: 2em;
-        }
-      }
-      @media screen and (max-width: 450px) {
-        html
-          body[for="html-export"]:not(
-            [data-presentation-mode]
-          )[html-show-sidebar-toc]
-          .markdown-preview {
-          width: 100%;
-        }
-      }
-      html
-        body[for="html-export"]:not([data-presentation-mode]):not(
-          [html-show-sidebar-toc]
-        )
-        .markdown-preview {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      html
-        body[for="html-export"]:not([data-presentation-mode]):not(
-          [html-show-sidebar-toc]
-        )
-        .md-sidebar-toc {
-        display: none;
-      }
-      @font-face {
-        font-family: "Roboto Mono";
-        font-style: normal;
-        font-weight: 400;
-        src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 300;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 400;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 600;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdr.ttf)
-          format("truetype");
-      }
-      * {
-        -webkit-font-smoothing: antialiased;
-        -webkit-overflow-scrolling: touch;
-        -webkit-tap-highlight-color: transparent;
-        -webkit-text-size-adjust: none;
-        -webkit-touch-callout: none;
-        box-sizing: border-box;
-      }
-      .markdown-preview code {
-        border-radius: 2px;
-        color: #e96900;
-        font-size: 12.8px;
-        font-size: 0.8rem;
-        margin: 0 2px;
-        padding: 3px 5px;
-        white-space: pre-wrap;
-      }
-      .markdown-preview code,
-      .markdown-preview pre {
-        background-color: #f8f8f8;
-        font-family: Roboto Mono, Monaco, courier, monospace;
-      }
-      .markdown-preview pre {
-        -moz-osx-font-smoothing: initial;
-        -webkit-font-smoothing: initial;
-        line-height: 24px;
-        line-height: 1.5rem;
-        margin: 1.2em 0;
-        overflow: auto;
-        padding: 0 22.4px;
-        padding: 0 1.4rem;
-        position: relative;
-        word-wrap: normal;
-      }
-      .token.cdata,
-      .token.comment,
-      .token.doctype,
-      .token.prolog {
-        color: #8e908c;
-      }
-      .token.namespace {
-        opacity: 0.7;
-      }
-      .token.boolean,
-      .token.number {
-        color: #c76b29;
-      }
-      .token.punctuation {
-        color: #525252;
-      }
-      .token.property {
-        color: #c08b30;
-      }
-      .token.tag {
-        color: #2973b7;
-      }
-      .token.string {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-      }
-      .token.selector {
-        color: #6679cc;
-      }
-      .token.attr-name {
-        color: #2973b7;
-      }
-      .language-css .token.string,
-      .style .token.string,
-      .token.entity,
-      .token.url {
-        color: #22a2c9;
-      }
-      .token.attr-value,
-      .token.control,
-      .token.directive,
-      .token.unit {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-      }
-      .token.keyword {
-        color: #e96900;
-      }
-      .token.atrule,
-      .token.regex,
-      .token.statement {
-        color: #22a2c9;
-      }
-      .token.placeholder,
-      .token.variable {
-        color: #3d8fd1;
-      }
-      .token.deleted {
-        text-decoration: line-through;
-      }
-      .token.inserted {
-        border-bottom: 1px dotted #202746;
-        text-decoration: none;
-      }
-      .token.italic {
-        font-style: italic;
-      }
-      .token.bold,
-      .token.important {
-        font-weight: 700;
-      }
-      .token.important {
-        color: #c94922;
-      }
-      .token.entity {
-        cursor: help;
-      }
-      .markdown-preview pre > code,
-      .markdown-preview pre[class*="language"] {
-        -moz-osx-font-smoothing: initial;
-        -webkit-font-smoothing: initial;
-        background-color: #f8f8f8;
-        border-radius: 2px;
-        color: #525252;
-        display: block;
-        font-family: Roboto Mono, Monaco, courier, monospace;
-        font-size: 12.8px;
-        font-size: 0.8rem;
-        line-height: 2em;
-        max-width: inherit;
-        overflow: inherit;
-        padding: 0.8em 1.4em;
-        white-space: pre;
-      }
-      .markdown-preview pre > code {
-        padding-left: 0;
-        padding-right: 0;
-      }
-      .markdown-preview code:after,
-      .markdown-preview code:before {
-        letter-spacing: 0.8px;
-        letter-spacing: 0.05rem;
-      }
-      code .token {
-        -moz-osx-font-smoothing: initial;
-        -webkit-font-smoothing: initial;
-        min-height: 24px;
-        min-height: 1.5rem;
-      }
-      pre:after {
-        color: #ccc;
-        content: attr(data-lang);
-        font-size: 9.6px;
-        font-size: 0.6rem;
-        font-weight: 600;
-        height: 15px;
-        line-height: 15px;
-        padding: 5px 10px 0;
-        position: absolute;
-        right: 0;
-        text-align: right;
-        top: 0;
-      }
-      pre[data-line] {
-        position: relative;
-        padding: 1em 0 1em 3em !important;
-      }
-      pre[data-line] .line-highlight-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: transparent;
-        display: block;
-        width: 100%;
-      }
-      pre[data-line] .line-highlight {
-        position: absolute;
-        left: 0;
-        right: 0;
-        padding: inherit 0;
-        margin-top: 1em;
-        background: hsla(24, 20%, 50%, 0.08);
-        background: linear-gradient(
-          to right,
-          hsla(24, 20%, 50%, 0.1) 70%,
-          hsla(24, 20%, 50%, 0)
-        );
-        pointer-events: none;
-        line-height: inherit;
-        white-space: pre;
-      }
-      pre[data-line] .line-highlight:before,
-      pre[data-line] .line-highlight[data-end]:after {
-        content: attr(data-start);
-        position: absolute;
-        top: 0.4em;
-        left: 0.6em;
-        min-width: 1em;
-        padding: 0 0.5em;
-        background-color: hsla(24, 20%, 50%, 0.4);
-        color: #f4f1ef;
-        font: bold 65%/1.5 sans-serif;
-        text-align: center;
-        vertical-align: 0.3em;
-        border-radius: 999px;
-        text-shadow: none;
-        box-shadow: 0 1px #fff;
-      }
-      pre[data-line] .line-highlight[data-end]:after {
-        content: attr(data-end);
-        top: auto;
-        bottom: 0.4em;
-      }
-      .emoji {
-        height: 0.8em;
-      }
-      @font-face {
-        font-family: "Roboto Mono";
-        font-style: normal;
-        font-weight: 400;
-        src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW9.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 300;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 400;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf)
-          format("truetype");
-      }
-      @font-face {
-        font-family: "Source Sans Pro";
-        font-style: normal;
-        font-weight: 600;
-        src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdr.ttf)
-          format("truetype");
-      }
-      * {
-        -webkit-font-smoothing: antialiased;
-        -webkit-overflow-scrolling: touch;
-        -webkit-tap-highlight-color: transparent;
-        -webkit-text-size-adjust: none;
-        -webkit-touch-callout: none;
-        box-sizing: border-box;
-      }
-      div#app {
-        font-size: 30px;
-        font-weight: lighter;
-        margin: 40vh auto;
-        text-align: center;
-      }
-      div#app:empty:before {
-        content: "Loading...";
-      }
-      .emoji {
-        height: 19.2px;
-        height: 1.2rem;
-        vertical-align: middle;
-      }
-      .progress {
-        background-color: #42b983;
-        background-color: var(--theme-color, #42b983);
-        height: 2px;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        transition: width 0.2s, opacity 0.4s;
-        width: 0;
-        z-index: 5;
-      }
-      .search .search-keyword,
-      .search a:hover {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-      }
-      .search .search-keyword {
-        font-style: normal;
-        font-weight: 700;
-      }
-      body,
-      html {
-        height: 100%;
-      }
-      body {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        color: #34495e;
-        font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif;
-        font-size: 15px;
-        letter-spacing: 0;
-        margin: 0;
-        overflow-x: hidden;
-      }
-      img {
-        max-width: 100%;
-      }
-      a[disabled] {
-        cursor: not-allowed;
-        opacity: 0.6;
-      }
-      kbd {
-        color: #34495e;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        display: inline-block;
-        font-size: 12px !important;
-        line-height: 12px;
-        margin-bottom: 3px;
-        padding: 3px 5px;
-        vertical-align: middle;
-      }
-      .task-list-item {
-        list-style-type: none;
-      }
-      li input[type="checkbox"] {
-        margin: 0 0.2em 0.25em -1.6em;
-        vertical-align: middle;
-      }
-      .app-nav {
-        left: 0;
-        margin: 25px 60px 0 0;
-        position: absolute;
-        right: 0;
-        text-align: right;
-        z-index: 2;
-      }
-      .app-nav p {
-        margin: 0;
-      }
-      .app-nav > a {
-        margin: 0 16px;
-        margin: 0 1rem;
-        padding: 5px 0;
-      }
-      .app-nav li,
-      .app-nav ul {
-        display: inline-block;
-        list-style: none;
-        margin: 0;
-      }
-      .app-nav a {
-        color: inherit;
-        font-size: 16px;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-      .app-nav a.active,
-      .app-nav a:hover {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-      }
-      .app-nav a.active {
-        border-bottom: 2px solid #42b983;
-        border-bottom: 2px solid var(--theme-color, #42b983);
-      }
-      .app-nav li {
-        display: inline-block;
-        margin: 0 16px;
-        margin: 0 1rem;
-        padding: 5px 0;
-        position: relative;
-      }
-      .app-nav li ul {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-bottom-color: #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        display: none;
-        max-height: calc(100vh - 61px);
-        overflow-y: scroll;
-        padding: 10px 0;
-        position: absolute;
-        right: -15px;
-        text-align: left;
-        top: 100%;
-        white-space: nowrap;
-      }
-      .app-nav li ul li {
-        display: block;
-        font-size: 14px;
-        line-height: 16px;
-        line-height: 1rem;
-        margin: 0;
-        margin: 8px 14px;
-        white-space: nowrap;
-      }
-      .app-nav li ul a {
-        display: block;
-        font-size: inherit;
-        margin: 0;
-        padding: 0;
-      }
-      .app-nav li ul a.active {
-        border-bottom: 0;
-      }
-      .app-nav li:hover ul {
-        display: block;
-      }
-      .app-nav.no-badge {
-        margin-right: 25px;
-      }
-      .github-corner {
-        border-bottom: 0;
-        position: fixed;
-        right: 0;
-        text-decoration: none;
-        top: 0;
-        z-index: 1;
-      }
-      .github-corner svg {
-        color: #fff;
-        fill: #42b983;
-        fill: var(--theme-color, #42b983);
-        height: 80px;
-        width: 80px;
-      }
-      .github-corner:hover .octo-arm {
-        -webkit-animation: a 0.56s ease-in-out;
-        animation: a 0.56s ease-in-out;
-      }
-      main {
-        display: block;
-        position: relative;
-        width: 100vw;
-        height: 100%;
-        z-index: 0;
-      }
-      .anchor {
-        display: inline-block;
-        text-decoration: none;
-        transition: all 0.3s;
-      }
-      .anchor span {
-        color: #34495e;
-      }
-      .anchor:hover {
-        text-decoration: underline;
-      }
-      .sidebar {
-        border-right: 1px solid rgba(0, 0, 0, 0.07);
-        overflow-y: auto;
-        padding: 40px 0 0;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        transition: -webkit-transform 0.25s ease-out;
-        transition: transform 0.25s ease-out;
-        transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
-        width: 300px;
-        z-index: 3;
-      }
-      .sidebar > h1 {
-        margin: 0 auto 16px;
-        margin: 0 auto 1rem;
-        font-size: 24px;
-        font-size: 1.5rem;
-        font-weight: 300;
-        text-align: center;
-      }
-      .sidebar > h1 a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .sidebar > h1 .app-nav {
-        display: block;
-        position: static;
-      }
-      .sidebar .sidebar-nav {
-        line-height: 2em;
-        padding-bottom: 40px;
-      }
-      .sidebar ul {
-        margin: 0;
-        padding: 0;
-      }
-      .sidebar li > p {
-        font-weight: 700;
-        margin: 0;
-      }
-      .sidebar ul,
-      .sidebar ul li {
-        list-style: none;
-      }
-      .sidebar ul li a {
-        border-bottom: none;
-        display: block;
-      }
-      .sidebar ul li ul {
-        padding-left: 20px;
-      }
-      .sidebar::-webkit-scrollbar {
-        width: 4px;
-      }
-      .sidebar::-webkit-scrollbar-thumb {
-        background: 0 0;
-        border-radius: 4px;
-      }
-      .sidebar:hover::-webkit-scrollbar-thumb {
-        background: hsla(0, 0%, 53%, 0.4);
-      }
-      .sidebar:hover::-webkit-scrollbar-track {
-        background: hsla(0, 0%, 53%, 0.1);
-      }
-      .sidebar-toggle {
-        background-color: transparent;
-        background-color: hsla(0, 0%, 100%, 0.8);
-        border: 0;
-        outline: 0;
-        padding: 10px;
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        text-align: center;
-        transition: opacity 0.3s;
-        width: 30px;
-        width: 284px;
-        z-index: 4;
-      }
-      .sidebar-toggle .sidebar-toggle-button:hover {
-        opacity: 0.4;
-      }
-      .sidebar-toggle span {
-        background-color: #42b983;
-        background-color: var(--theme-color, #42b983);
-        display: block;
-        margin-bottom: 4px;
-        width: 16px;
-        height: 2px;
-      }
-      body.sticky .sidebar,
-      body.sticky .sidebar-toggle {
-        position: fixed;
-      }
-      .content {
-        padding-top: 60px;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 300px;
-        position: absolute;
-        transition: left 0.25s ease;
-      }
-      .markdown-preview > * {
-        box-sizing: border-box;
-        font-size: inherit;
-      }
-      .markdown-preview > :first-child {
-        margin-top: 0 !important;
-      }
-      .markdown-preview hr {
-        border: none;
-        border-bottom: 1px solid #eee;
-        margin: 2em 0;
-      }
-      .markdown-preview table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        display: block;
-        margin-bottom: 16px;
-        margin-bottom: 1rem;
-        overflow: auto;
-        width: 100%;
-      }
-      .markdown-preview th {
-        font-weight: 700;
-      }
-      .markdown-preview td,
-      .markdown-preview th {
-        border: 1px solid #ddd;
-        padding: 6px 13px;
-      }
-      .markdown-preview tr {
-        border-top: 1px solid #ccc;
-      }
-      .markdown-preview p.tip,
-      .markdown-preview tr:nth-child(2n) {
-        background-color: #f8f8f8;
-      }
-      .markdown-preview p.tip {
-        border-bottom-right-radius: 2px;
-        border-left: 4px solid #f66;
-        border-top-right-radius: 2px;
-        margin: 2em 0;
-        padding: 12px 24px 12px 30px;
-        position: relative;
-      }
-      .markdown-preview p.tip code {
-        background-color: #efefef;
-      }
-      .markdown-preview p.tip em {
-        color: #34495e;
-      }
-      .markdown-preview p.tip:before {
-        background-color: #f66;
-        border-radius: 100%;
-        color: #fff;
-        content: "!";
-        font-family: Dosis, Source Sans Pro, Helvetica Neue, Arial, sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        left: -12px;
-        line-height: 20px;
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        text-align: center;
-        top: 14px;
-      }
-      .markdown-preview p.warn {
-        background: rgba(66, 185, 131, 0.1);
-        border-radius: 2px;
-        padding: 16px;
-        padding: 1rem;
-      }
-      body.close .sidebar {
-        -webkit-transform: translateX(-300px);
-        transform: translateX(-300px);
-      }
-      body.close .sidebar-toggle {
-        width: auto;
-      }
-      body.close .content {
-        left: 0;
-      }
-      @media print {
-        .app-nav,
-        .github-corner,
-        .sidebar,
-        .sidebar-toggle {
-          display: none;
-        }
-      }
-      @media screen and (max-width: 768px) {
-        .github-corner,
-        .sidebar,
-        .sidebar-toggle {
-          position: fixed;
-        }
-        .app-nav {
-          margin-top: 16px;
-        }
-        .app-nav li ul {
-          top: 30px;
-        }
-        main {
-          height: auto;
-          overflow-x: hidden;
-        }
-        .sidebar {
-          left: -300px;
-          transition: -webkit-transform 0.25s ease-out;
-          transition: transform 0.25s ease-out;
-          transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
-        }
-        .content {
-          left: 0;
-          max-width: 100vw;
-          position: static;
-          padding-top: 20px;
-          transition: -webkit-transform 0.25s ease;
-          transition: transform 0.25s ease;
-          transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-        }
-        .app-nav,
-        .github-corner {
-          transition: -webkit-transform 0.25s ease-out;
-          transition: transform 0.25s ease-out;
-          transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
-        }
-        .sidebar-toggle {
-          background-color: transparent;
-          width: auto;
-          padding: 30px 30px 10px 10px;
-        }
-        body.close .sidebar {
-          -webkit-transform: translateX(300px);
-          transform: translateX(300px);
-        }
-        body.close .sidebar-toggle {
-          background-color: hsla(0, 0%, 100%, 0.8);
-          transition: background-color 1s;
-          width: 284px;
-          padding: 10px;
-        }
-        body.close .content {
-          -webkit-transform: translateX(300px);
-          transform: translateX(300px);
-        }
-        body.close .app-nav,
-        body.close .github-corner {
-          display: none;
-        }
-        .github-corner .octo-arm {
-          -webkit-animation: a 0.56s ease-in-out;
-          animation: a 0.56s ease-in-out;
-        }
-        .github-corner:hover .octo-arm {
-          -webkit-animation: none;
-          animation: none;
-        }
-      }
-      @-webkit-keyframes a {
-        0%,
-        to {
-          -webkit-transform: rotate(0);
-          transform: rotate(0);
-        }
-        20%,
-        60% {
-          -webkit-transform: rotate(-25deg);
-          transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-          -webkit-transform: rotate(10deg);
-          transform: rotate(10deg);
-        }
-      }
-      @keyframes a {
-        0%,
-        to {
-          -webkit-transform: rotate(0);
-          transform: rotate(0);
-        }
-        20%,
-        60% {
-          -webkit-transform: rotate(-25deg);
-          transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-          -webkit-transform: rotate(10deg);
-          transform: rotate(10deg);
-        }
-      }
-      section.cover {
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 100vh;
-        display: none;
-      }
-      section.cover .cover-main {
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        margin: -20px 16px 0;
-        text-align: center;
-        z-index: 1;
-      }
-      section.cover a {
-        color: inherit;
-      }
-      section.cover a,
-      section.cover a:hover {
-        text-decoration: none;
-      }
-      section.cover p {
-        line-height: 24px;
-        line-height: 1.5rem;
-        margin: 1em 0;
-      }
-      section.cover h1 {
-        color: inherit;
-        font-size: 40px;
-        font-size: 2.5rem;
-        font-weight: 300;
-        margin: 10px 0 40px;
-        margin: 0.625rem 0 2.5rem;
-        position: relative;
-        text-align: center;
-      }
-      section.cover h1 a {
-        display: block;
-      }
-      section.cover h1 small {
-        bottom: -7px;
-        bottom: -0.4375rem;
-        font-size: 16px;
-        font-size: 1rem;
-        position: absolute;
-      }
-      section.cover blockquote {
-        font-size: 24px;
-        font-size: 1.5rem;
-        text-align: center;
-      }
-      section.cover ul {
-        line-height: 1.8;
-        list-style-type: none;
-        margin: 1em auto;
-        max-width: 500px;
-        padding: 0;
-      }
-      section.cover .cover-main > p:last-child a {
-        border-color: #42b983;
-        border: 1px solid var(--theme-color, #42b983);
-        border-radius: 2rem;
-        box-sizing: border-box;
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-        display: inline-block;
-        font-size: 16.8px;
-        font-size: 1.05rem;
-        letter-spacing: 1.6px;
-        letter-spacing: 0.1rem;
-        margin-right: 16px;
-        margin-right: 1rem;
-        padding: 0.75em 32px;
-        padding: 0.75em 2rem;
-        text-decoration: none;
-        transition: all 0.15s ease;
-      }
-      section.cover .cover-main > p:last-child a:last-child {
-        background-color: #42b983;
-        background-color: var(--theme-color, #42b983);
-        color: #fff;
-        margin-right: 0;
-      }
-      section.cover .cover-main > p:last-child a:last-child:hover {
-        color: inherit;
-        opacity: 0.8;
-      }
-      section.cover .cover-main > p:last-child a:hover {
-        color: inherit;
-      }
-      section.cover blockquote > p > a {
-        border-bottom: 2px solid #42b983;
-        border-bottom: 2px solid var(--theme-color, #42b983);
-        transition: color 0.3s;
-      }
-      section.cover blockquote > p > a:hover {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-      }
-      section.cover.show {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-      }
-      section.cover.has-mask .mask {
-        background-color: #fff;
-        opacity: 0.8;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-      }
-      .sidebar,
-      body {
-        background-color: #fff;
-      }
-      .sidebar {
-        color: #364149;
-      }
-      .sidebar li {
-        margin: 6px 0 6px 15px;
-      }
-      .sidebar ul li a {
-        color: #505d6b;
-        font-size: 14px;
-        font-weight: 400;
-        overflow: hidden;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .sidebar ul li a:hover {
-        text-decoration: underline;
-      }
-      .sidebar ul li ul {
-        padding: 0;
-      }
-      .sidebar ul li.active > a {
-        border-right: 2px solid;
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-        font-weight: 600;
-      }
-      .app-sub-sidebar li:before {
-        content: "-";
-        padding-right: 4px;
-        float: left;
-      }
-      .markdown-preview {
-        background-color: #fff;
-      }
-      .markdown-preview h1,
-      .markdown-preview h2,
-      .markdown-preview h3,
-      .markdown-preview h4,
-      .markdown-preview strong {
-        color: #2c3e50;
-        font-weight: 600;
-      }
-      .markdown-preview a {
-        color: #42b983;
-        color: var(--theme-color, #42b983);
-        font-weight: 600;
-      }
-      .md-sidebar-toc a {
-        color: #42b983;
-        font-weight: 600;
-      }
-      .markdown-preview h1 {
-        font-size: 32px;
-        font-size: 2rem;
-        margin: 0 0 16px;
-        margin: 0 0 1rem;
-      }
-      .markdown-preview h2 {
-        font-size: 28px;
-        font-size: 1.75rem;
-        margin: 45px 0 12.8px;
-        margin: 45px 0 0.8rem;
-      }
-      .markdown-preview h3 {
-        font-size: 24px;
-        font-size: 1.5rem;
-        margin: 40px 0 9.6px;
-        margin: 40px 0 0.6rem;
-      }
-      .markdown-preview h4 {
-        font-size: 20px;
-        font-size: 1.25rem;
-      }
-      .markdown-preview h5,
-      .markdown-preview h6 {
-        font-size: 16px;
-        font-size: 1rem;
-      }
-      .markdown-preview h6 {
-        color: #777;
-      }
-      .markdown-preview figure,
-      .markdown-preview p {
-        margin: 1.2em 0;
-      }
-      .markdown-preview ol,
-      .markdown-preview p,
-      .markdown-preview ul {
-        line-height: 25.6px;
-        line-height: 1.6rem;
-        word-spacing: 0.8px;
-        word-spacing: 0.05rem;
-      }
-      .markdown-preview ol,
-      .markdown-preview ul {
-        padding-left: 24px;
-        padding-left: 1.5rem;
-      }
-      .markdown-preview blockquote {
-        border-left: 4px solid #42b983;
-        border-left: 4px solid var(--theme-color, #42b983);
-        color: #858585;
-        background-color: #f0f0f0;
-        margin: 2em 0;
-        padding-left: 20px;
-      }
-      .markdown-preview blockquote p {
-        font-weight: 600;
-        margin-left: 0;
-      }
-      .markdown-preview iframe {
-        margin: 1em 0;
-      }
-      .markdown-preview em {
-        color: #7f8c8d;
-      }
-      /* Please visit the URL below for more information: */
-      /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
-    </style>
+    <title>D&D OSR</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
-    <!-- The content below will be included at the end of the <head> element. -->
-    <html>
-      <head>
-        <script type="text/javascript">
-          document.addEventListener("DOMContentLoaded", function () {
-            // your code here
-          });
-        </script>
-      </head>
-      <body></body>
-    </html>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"
+    />
+    <style>
+      hr {
+        border: none;
+        border-top: 1px solid #a5a5a5 !important;
+        margin: 20px 0;
+      }
+    </style>
   </head>
-  <body for="html-export">
-    <div class="crossnote markdown-preview">
-      <html>
-        <head></head>
-        <body>
-          <div>
-            <h1
-              id="dd--osr"
-              ebook-toc-level-1=""
-              heading="<strong>D&amp;amp;D | OSR</strong> "
-            >
-              <strong>D&amp;D | OSR</strong>
-            </h1>
-            <h2
-              id="1-introducción"
-              ebook-toc-level-2=""
-              heading="<strong>1. Introducción</strong> "
-            >
-              <strong>1. Introducción</strong>
-            </h2>
-            <hr />
-            <p>
-              OSR (Old School Revival) busca recuperar la esencia de los
-              primeros juegos de rol, especialmente Dungeons &amp; Dragons de
-              los años 70 y 80. Esto se traduce en reglas simples, un alto
-              riesgo de muerte y un fuerte énfasis en la exploración y la
-              creatividad.
-            </p>
-            <h2
-              id="2-creación-de-personaje"
-              ebook-toc-level-2=""
-              heading="<strong>2. Creación de personaje</strong> "
-            >
-              <strong>2. Creación de personaje</strong>
-            </h2>
-            <hr />
-            <h3
-              id="21-nombre-y-trasfondo"
-              ebook-toc-level-3=""
-              heading="<strong>2.1 Nombre y Trasfondo</strong> "
-            >
-              <strong>2.1 Nombre y Trasfondo</strong>
-            </h3>
-            <p>
-              Tu historia comienza con una simple pregunta: ¿Quién es tu
-              personaje?<br />
-              Después de nombrar a tu personaje, dale un trasfondo que determine
-              las motivaciones que impulsan sus acciones.
-            </p>
-            <blockquote>
-              <p>
-                Los personajes no están limitados por clases predefinidas; su
-                identidad y habilidades se determinan por lo que llevan y cómo
-                lo usan.
-              </p>
-            </blockquote>
-            <h3
-              id="22-características"
-              ebook-toc-level-3=""
-              heading="<strong>2.2 Características</strong> "
-            >
-              <strong>2.2 Características</strong>
-            </h3>
-            <p>
-              Elige un paquete de características, puedes asignar directamente
-              estos valores predeterminados basándote en la orientación de tu
-              personaje.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th style="text-align: left">Tipo de Personaje</th>
-                  <th style="text-align: center">Fuerza</th>
-                  <th style="text-align: center">Destreza</th>
-                  <th style="text-align: center">Constitución</th>
-                  <th style="text-align: center">Inteligencia</th>
-                  <th style="text-align: center">Sabiduría</th>
-                  <th style="text-align: center">Carisma</th>
-                  <th style="text-align: center">Puntos de Golpe</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="text-align: left">
-                    <strong>Combate cuerpo a cuerpo</strong>
-                  </td>
-                  <td style="text-align: center">18 (+3)</td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">15 (+2)</td>
-                  <td style="text-align: center">9 (0)</td>
-                  <td style="text-align: center">10 (0)</td>
-                  <td style="text-align: center">11 (0)</td>
-                  <td style="text-align: center">15</td>
-                </tr>
-                <tr>
-                  <td style="text-align: left">
-                    <strong>Defensa y protección</strong>
-                  </td>
-                  <td style="text-align: center">15 (+2)</td>
-                  <td style="text-align: center">11 (0)</td>
-                  <td style="text-align: center">18 (+3)</td>
-                  <td style="text-align: center">9 (0)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">10 (0)</td>
-                  <td style="text-align: center">20</td>
-                </tr>
-                <tr>
-                  <td style="text-align: left">
-                    <strong>Usuario de la mágia</strong>
-                  </td>
-                  <td style="text-align: center">8 (-1)</td>
-                  <td style="text-align: center">11 (0)</td>
-                  <td style="text-align: center">10 (0)</td>
-                  <td style="text-align: center">18 (+3)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">10</td>
-                </tr>
-                <tr>
-                  <td style="text-align: left">
-                    <strong>Ágil y sigiloso</strong>
-                  </td>
-                  <td style="text-align: center">11 (0)</td>
-                  <td style="text-align: center">18 (+3)</td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">15 (+2)</td>
-                  <td style="text-align: center">11 (0)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">15</td>
-                </tr>
-                <tr>
-                  <td style="text-align: left">
-                    <strong>Versátil y balanceado</strong>
-                  </td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">13 (+1)</td>
-                  <td style="text-align: center">14 (+2)</td>
-                  <td style="text-align: center">15</td>
-                </tr>
-              </tbody>
-            </table>
-            <h3
-              id="23-equipo-inicial"
-              ebook-toc-level-3=""
-              heading="<strong>2.3 Equipo Inicial</strong> "
-            >
-              <strong>2.3 Equipo Inicial</strong>
-            </h3>
-            <p>Tu personaje comienza con:</p>
-            <ul>
-              <li>
-                <strong>Elige dos armas de su elección:</strong> (Puedes
-                construirla en el <strong>Constructor de Armas</strong>).
-              </li>
-              <li>
-                <strong>Equipo inicial:</strong> (Según la lista de
-                <strong>Tabla de Objetos mundanos</strong>).
-              </li>
-              <li><strong>Dinero:</strong> (3d6x20) dracones.</li>
-              <li>
-                <strong>Los libros de hechizos:</strong> Elige uno al inicio, el
-                resto pueden encontrarse durante las aventuras.
-              </li>
-            </ul>
-            <h3
-              id="24-espacios-de-inventario"
-              ebook-toc-level-3=""
-              heading="<strong>2.4 Espacios de Inventario</strong> "
-            >
-              <strong>2.4 Espacios de Inventario</strong>
-            </h3>
-            <p>
-              Tu personaje tiene <strong>15 espacios</strong> en su mochila para
-              llevar objetos.
-            </p>
-            <ul>
-              <li>
-                Todos los objetos ocupan
-                <strong>1 espacio de inventario</strong>.
-              </li>
-              <li>
-                Los objetos pequeños <strong>no ocupan espacio</strong> (por
-                ejemplo, monedas).
-              </li>
-            </ul>
-            <h3
-              id="25-armadura"
-              ebook-toc-level-3=""
-              heading="<strong>2.5 Armadura</strong> "
-            >
-              <strong>2.5 Armadura</strong>
-            </h3>
-            <p>
-              La <strong>Clase de Armadura (CA)</strong> representa la defensa
-              de tu personaje y la dificultad que tienen los enemigos para
-              golpearlo. Una CA más alta significa una mejor protección.
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th><strong>Tipo de Armadura</strong></th>
-                  <th style="text-align: center"><strong>CA</strong></th>
-                  <th style="text-align: center"><strong>Requsitos</strong></th>
-                  <th style="text-align: center">
-                    <strong>Bonificadores</strong>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Armadura ligera</td>
-                  <td style="text-align: center">12</td>
-                  <td style="text-align: center">Ninguno</td>
-                  <td style="text-align: center">Ninguno</td>
-                </tr>
-                <tr>
-                  <td>Armadura media</td>
-                  <td style="text-align: center">14</td>
-                  <td style="text-align: center">Ninguno</td>
-                  <td style="text-align: center">Ninguno</td>
-                </tr>
-                <tr>
-                  <td>Armadura pesada</td>
-                  <td style="text-align: center">16</td>
-                  <td style="text-align: center">Requiere 18+ de Fuerza</td>
-                  <td style="text-align: center">Ninguno</td>
-                </tr>
-                <tr>
-                  <td>Escudo</td>
-                  <td style="text-align: center">+1</td>
-                  <td style="text-align: center">Ninguno</td>
-                  <td style="text-align: center">Se suma a la CA</td>
-                </tr>
-                <tr>
-                  <td>Escudo Pavés</td>
-                  <td style="text-align: center">+2</td>
-                  <td style="text-align: center">Requiere 18+ de Fuerza</td>
-                  <td style="text-align: center">Se suma a la CA</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              El bonificador de Destreza no se aplica a la Clase de Armadura
-              (CA) base cuando se utiliza armadura pesada o armadura media. En
-              el caso de las armaduras ligeras, el bonificador de Destreza sí se
-              suma a la CA base, ya que este tipo de armadura está diseñada para
-              permitir movilidad y aprovechar las habilidades ágiles del
-              portador.
-            </p>
-            <p>
-              Cuando tu personaje no usa armadura su CA será (10 + su
-              bonificación de destreza).
-            </p>
-            <h2
-              id="3-pruebas-de-características"
-              ebook-toc-level-2=""
-              heading="<strong>3. Pruebas de Características</strong> "
-            >
-              <strong>3. Pruebas de Características</strong>
-            </h2>
-            <hr />
-            <p>
-              Cada desafío tiene una <strong>Clase de Dificultad (CD)</strong>:
-            </p>
-            <ul>
-              <li><strong>10</strong> → Fácil</li>
-              <li><strong>20</strong> → Difícil</li>
-              <li><strong>30</strong> → Casi imposible</li>
-            </ul>
-            <p>Para hacer una prueba:</p>
-            <ol>
-              <li>
-                <strong>Lanza 1d20</strong> y suma el Bonificador de
-                Característica de tu personaje.
-              </li>
-              <li>
-                Si el resultado es igual o mayor a la CD, tu
-                <strong>personaje tiene éxito</strong>.
-              </li>
-              <li>
-                El DM define qué característica es adecuada para la prueba.
-              </li>
-            </ol>
-            <h2
-              id="4-combate"
-              ebook-toc-level-2=""
-              heading="<strong>4. Combate</strong> "
-            >
-              <strong>4. Combate</strong>
-            </h2>
-            <hr />
-            <h3
-              id="41-iniciativa"
-              ebook-toc-level-3=""
-              heading="<strong>4.1 Iniciativa</strong> "
-            >
-              <strong>4.1 Iniciativa</strong>
-            </h3>
-            <ul>
-              <li>
-                Los personajes <strong>siempre actúan primero</strong>, excepto
-                en emboscadas.
-              </li>
-            </ul>
-            <h3
-              id="42-acciones-en-el-turno"
-              ebook-toc-level-3=""
-              heading="<strong>4.2 Acciones en el Turno</strong> "
-            >
-              <strong>4.2 Acciones en el Turno</strong>
-            </h3>
-            <p>
-              En tu turno, tu personaje puede realizar diversas acciones, como:
-            </p>
-            <ul>
-              <li>Moverse.</li>
-              <li>Atacar.</li>
-              <li>Lanzar hechizos.</li>
-              <li>Realizar otras acciones razonables.</li>
-            </ul>
-            <h3
-              id="43-resolución-de-ataques"
-              ebook-toc-level-3=""
-              heading="<strong>4.3 Resolución de Ataques</strong> "
-            >
-              <strong>4.3 Resolución de Ataques</strong>
-            </h3>
-            <p>Para determinar si un ataque tiene éxito:</p>
-            <ol>
-              <li>
-                <strong>Lanza 1d20</strong> y suma el bonificador: Fuerza para
-                ataques cuerpo a cuerpo. Destreza para ataques a distancia.
-                Inteligencia para ataques mágicos.
-              </li>
-              <li>
-                <strong>Compara el resultado con la CA del objetivo.</strong>
-              </li>
-              <li>
-                Si el resultado es <strong>igual o mayor</strong> que la CA del
-                objetivo, el ataque de tu personaje acierta y debes tirar el
-                daño de arma.<br />
-                Si un personaje ataca con un modificador de +4 y saca un
-                <strong>12</strong> en el d20, su total es
-                <strong>16</strong>.<br />
-                Si el enemigo tiene <strong>CA 14</strong>, el ataque
-                <strong>acierta</strong> y se tira el daño.<br />
-                Si el enemigo tuviera <strong>CA 17</strong>, el ataque
-                <strong>fallaría</strong>.
-              </li>
-            </ol>
-            <h4
-              id="ataque-de-un-monstruo"
-              ebook-toc-level-4=""
-              heading="<strong>Ataque de un monstruo</strong> "
-            >
-              <strong>Ataque de un monstruo</strong>
-            </h4>
-            <ol>
-              <li>
-                <strong>Lanza 1d20</strong> + bonificador de ataque del monstruo
-              </li>
-              <li>
-                <strong>Compara el resultado con la CA del objetivo.</strong>
-              </li>
-              <li>
-                Si el resultado es <strong>igual o mayor</strong> que la CA del
-                objetivo, el ataque acierta y se tira el daño de arma.
-              </li>
-            </ol>
-            <blockquote>
-              <p>
-                Los monstruos tienen un modificador de ataque específico
-                indicado en su sección <strong>ATQ</strong>.
-              </p>
-            </blockquote>
-            <h4
-              id="daño-de-arma"
-              ebook-toc-level-4=""
-              heading="<strong>Daño de arma</strong> "
-            >
-              <strong>Daño de arma</strong>
-            </h4>
-            <p>
-              Al calcular el daño con un arma, suma el bonificador de Fuerza si
-              es un arma cuerpo a cuerpo, o el de Destreza si es un arma a
-              distancia o ligera o ágil.
-            </p>
-            <blockquote>
-              <p>
-                Un pícaro con +2 de Destreza y una daga (1d4 de daño) causará
-                1d4 + 2 de daño.
-              </p>
-            </blockquote>
-            <h3
-              id="44-críticos-y-fallos"
-              ebook-toc-level-3=""
-              heading="<strong>4.4 Críticos y Fallos</strong> "
-            >
-              <strong>4.4 Críticos y Fallos</strong>
-            </h3>
-            <ul>
-              <li><strong>Crítico (20 natural):</strong> Doble daño.</li>
-              <li>
-                <strong>Fallo crítico (1 natural):</strong> Consecuencia
-                narrativa (caída, arma rota, etc.).
-              </li>
-            </ul>
-            <h2
-              id="5-distancias-y-movimiento"
-              ebook-toc-level-2=""
-              heading="<strong>5. Distancias y movimiento</strong> "
-            >
-              <strong>5. Distancias y movimiento</strong>
-            </h2>
-            <p>
-              Las distancias se manejan de manera intuitiva y simple para
-              facilitar la narrativa y el flujo del juego. Los jugadores evalúan
-              la distancia en términos de la capacidad para interactuar de los
-              personajes con enemigos o elementos en el entorno, como se
-              describe aquí:
-            </p>
-            <ul>
-              <li>
-                <strong>Corto alcance:</strong> El objetivo está lo
-                suficientemente cerca como para tocarlo o golpearlo desde donde
-                estás. Esto incluye acciones cuerpo a cuerpo.
-              </li>
-              <li>
-                <strong>Cercano:</strong> El objetivo está cerca, pero no dentro
-                de tu alcance inmediato. Puedes moverte durante tu turno para
-                colocarte al alcance de él.
-              </li>
-              <li>
-                <strong>Largo alcance:</strong> El objetivo está lo
-                suficientemente lejos como para ser alcanzado con un ataque a
-                distancia (por ejemplo, un arco o hechizo).
-              </li>
-              <li>
-                <strong>Demasiado lejos:</strong> El objetivo está fuera de tu
-                alcance, incluso con ataques a distancia. Tendrás que acercarte
-                para interactuar.
-              </li>
-            </ul>
-            <blockquote>
-              <p>
-                Se necesita una acción de movimiento para pasar de corto alcance
-                a Cercano, o de Cercano a larga discancia.
-              </p>
-            </blockquote>
-            <h2
-              id="6-monstruos"
-              ebook-toc-level-2=""
-              heading="<strong>6. Monstruos</strong> "
-            >
-              <strong>6. Monstruos</strong>
-            </h2>
-            <hr />
-            <h3
-              id="61-ficha-de-monstruo"
-              ebook-toc-level-3=""
-              heading="<strong>6.1 Ficha de Monstruo</strong> "
-            >
-              <strong>6.1 Ficha de Monstruo</strong>
-            </h3>
-            <p>
-              <strong>Esqueleto volador:</strong> Forjado con magia oscura,
-              estos esqueletos son guardianes incansables de ruinas antiguas.<br />
-              <strong>CA:</strong> 4 | <strong>PG:</strong> 4 |
-              <strong>ATQ:</strong> (+2) Garras (1d4) / Jaula de huesos |
-              <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
-              Rápida (Volando)
-            </p>
-            <ul>
-              <li>
-                <strong>Jaula de huesos:</strong> Una vez por combate, salen
-                huesos de la tierra, impiden que la víctima se mueva. El
-                esqueleto no puede realizar otras acciones mientras dure el
-                control y el efecto termina si este recibe daño o es
-                interrumpido.
-              </li>
-            </ul>
-            <h2
-              id="7-magia"
-              ebook-toc-level-2=""
-              heading="<strong>7. Magia</strong> "
-            >
-              <strong>7. Magia</strong>
-            </h2>
-            <hr />
-            <p>
-              Cada hechizo está registrado en un libro, y cada uno ocupa 1
-              espacio de inventario. El lanzador solo puede ejecutar un hechizo
-              una vez antes de necesitar descansar para recuperarse y poder
-              lanzarlo de nuevo.
-            </p>
-            <p>
-              En el caso de los hechizos que tienen efectos prolongados, es
-              necesario realizar una nueva tirada de habilidad en cada turno
-              para mantener el efecto activo.
-            </p>
-            <h3
-              id="71-para-lanzar-un-hechizo-de-ataque"
-              ebook-toc-level-3=""
-              heading="<strong>7.1 Para lanzar un hechizo de ataque</strong> "
-            >
-              <strong>7.1 Para lanzar un hechizo de ataque</strong>
-            </h3>
-            <ol>
-              <li>
-                Lanza 1d20 y <strong>suma el bonificador</strong> de su
-                puntuación de característica más alto
-              </li>
-              <li>
-                Compara el resultado con la
-                <strong>CA del objetivo</strong> para saber si el ataque de tu
-                personaje acierta.
-              </li>
-              <li>
-                Si el resultado es <strong>igual o mayor</strong> que la CA del
-                objetivo, el ataque acierta y se tira el daño correspondiente.
-                Si falla, el hechizo no surte efecto.
-              </li>
-            </ol>
-            <h3
-              id="72-para-lanzar-un-hechizo-de-utilidad"
-              ebook-toc-level-3=""
-              heading="<strong>7.2 Para lanzar un hechizo de utilidad</strong> "
-            >
-              <strong>7.2 Para lanzar un hechizo de utilidad</strong>
-            </h3>
-            <p>
-              Para lanzar un hechizo de utilidad, el jugador tira 1d20 y
-              <strong>suma el bonificador</strong> de su característica más
-              alta. Si el resultado es <strong>igual o mayor</strong> que el
-              valor de esa característica, el hechizo se ejecuta con éxito. Si
-              falla, no surte efecto; si el resultado es un 1 natural, el fallo
-              crítico puede desencadenar peligros graves según el criterio del
-              DM.
-            </p>
-            <h2
-              id="8-descanso"
-              ebook-toc-level-2=""
-              heading="<strong>8. Descanso</strong> "
-            >
-              <strong>8. Descanso</strong>
-            </h2>
-            <hr />
-            <h3
-              id="tipos-de-descanso"
-              ebook-toc-level-3=""
-              heading="Tipos de Descanso "
-            >
-              Tipos de Descanso
-            </h3>
-            <ol>
-              <li>
-                <p><strong>Descanso breve</strong></p>
-                <ul>
-                  <li>El personaje recupera 2d10 PG</li>
-                  <li>El personaje recupera 1d6 hechizos</li>
-                  <li>
-                    <strong>Limitaciones</strong>
-                    <ul>
-                      <li>
-                        Puede realizarse 1 vez entre descansos prolongados
-                      </li>
-                      <li>Requiere un refugio seguro o un entorno protegido</li>
-                      <li>
-                        El DM determina un cambio de escena o un lapso de tiempo
-                        significativo para que este descanso sea válido.
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Descanso prolongado</strong></p>
-                <ul>
-                  <li>El personaje recupera todos los PG</li>
-                  <li>El personaje recupera todos los hechizos</li>
-                  <li>
-                    <strong>Limitaciones</strong>
-                    <ul>
-                      <li>
-                        Requiere un asentamiento civilizado (pueblo, ciudad,
-                        taberna)
-                      </li>
-                      <li>
-                        El DM determina un cambio de búsqueda o un lapso de
-                        tiempo significativo para que este descanso sea válido.
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ol>
-            <h3
-              id="81-qué-constituye-un-refugio-seguro"
-              ebook-toc-level-3=""
-              heading="<strong>8.1 Qué constituye un refugio seguro</strong> "
-            >
-              <strong>8.1 Qué constituye un refugio seguro</strong>
-            </h3>
-            <ul>
-              <li>Un asentamiento civilizado (pueblo, ciudad, taberna)</li>
-              <li>
-                Una zona específicamente protegida (templo consagrado, refugio
-                sellado)
-              </li>
-              <li>
-                Un área que ha sido totalmente asegurada por los personajes
-                (todos los monstruos eliminados, entradas bloqueadas/vigiladas)
-              </li>
-              <li>
-                Un campamento fortificado con protecciones físicas y/o mágicas
-              </li>
-            </ul>
-            <h2
-              id="10-constructor-de-armas"
-              ebook-toc-level-2=""
-              heading="<strong>10. Constructor de Armas</strong> "
-            >
-              <strong>10. Constructor de Armas</strong>
-            </h2>
-            <hr />
-            <h3
-              id="armas-cuerpo-a-cuerpo"
-              ebook-toc-level-3=""
-              heading="<strong>Armas Cuerpo a Cuerpo</strong> "
-            >
-              <strong>Armas Cuerpo a Cuerpo</strong>
-            </h3>
-            <ol>
-              <li>
-                <p><strong>Armas Ligeras</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d4 (una mano).</li>
-                  <li>
-                    <strong>Propiedades disponibles:</strong> Ágil, Arrojadiza.
-                  </li>
-                  <li>
-                    <strong>Notas:</strong> Ideales para combate rápido y
-                    personajes que prioricen destreza sobre fuerza.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Estándar</strong></p>
-                <ul>
-                  <li>
-                    <strong>Daño:</strong> 1d6 (una mano) / 1d8 (dos manos).
-                  </li>
-                  <li>
-                    <strong>Propiedades disponibles:</strong> Ágil, Versátil.
-                  </li>
-                  <li>
-                    <strong>Notas:</strong> Balanceadas para personajes que
-                    buscan flexibilidad en combate.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Pesadas</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d10 (dos manos).</li>
-                  <li><strong>Propiedades disponibles:</strong> Potente.</li>
-                  <li>
-                    <strong>Notas:</strong> Requieren fuerza y ocupan ambas
-                    manos, ofreciendo gran daño a costa de movilidad.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Brutales</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d12 (dos manos).</li>
-                  <li><strong>Propiedades disponibles:</strong> Potente.</li>
-                  <li><strong>Restricción:</strong> Requiere 18+ de Fuerza.</li>
-                  <li>
-                    <strong>Notas:</strong> Máximas en daño, ideales para
-                    guerreros fuertes que priorizan poder sobre otras ventajas.
-                    Los personajes pequeños tienen desventaja al usarla.
-                  </li>
-                </ul>
-              </li>
-            </ol>
-            <hr />
-            <h3
-              id="armas-a-distancia"
-              ebook-toc-level-3=""
-              heading="<strong>Armas a Distancia</strong> "
-            >
-              <strong>Armas a Distancia</strong>
-            </h3>
-            <ol>
-              <li>
-                <p><strong>Armas Ligeras</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d4 (una mano).</li>
-                  <li>
-                    <strong>Propiedades disponibles:</strong> Arrojadiza,
-                    Precisa.
-                  </li>
-                  <li>
-                    <strong>Notas:</strong> Compactas y útiles para combates
-                    rápidos a corto alcance.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Estándar a Distancia</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d8 (dos manos).</li>
-                  <li><strong>Propiedades disponibles:</strong> Precisa.</li>
-                  <li>
-                    <strong>Notas:</strong> Excelente opción para ataques a
-                    distancia sostenidos.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Pesadas a Distancia</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d10 (dos manos).</li>
-                  <li><strong>Propiedades disponibles:</strong> Precisa.</li>
-                  <li>
-                    <strong>Notas:</strong> Requieren ambas manos y son
-                    poderosas a largas distancias. Los personajes pequeños
-                    tienen desventaja al usarla.
-                  </li>
-                  <li></li>
-                </ul>
-              </li>
-              <li>
-                <p><strong>Armas Brutal a Distancia</strong></p>
-                <ul>
-                  <li><strong>Daño:</strong> 1d12 (dos manos).</li>
-                  <li>
-                    <strong>Propiedades disponibles:</strong> Requiere un turno
-                    para recargar.
-                  </li>
-                  <li>
-                    <strong>Notas:</strong> Requieren ambas manos y son
-                    poderosas a largas distancias. Los personajes pequeños
-                    tienen desventaja al usarla.
-                  </li>
-                </ul>
-              </li>
-            </ol>
-            <hr />
-            <h3
-              id="propiedades-de-las-armas"
-              ebook-toc-level-3=""
-              heading="<strong>Propiedades de las Armas</strong> "
-            >
-              <strong>Propiedades de las Armas</strong>
-            </h3>
-            <ul>
-              <li>
-                <strong>Ágil:</strong> Usa Destreza o Fuerza en tiradas de
-                ataque.
-              </li>
-              <li>
-                <strong>Potente:</strong> Usa solo Fuerza en tiradas de ataque.
-              </li>
-              <li>
-                <strong>Precisa:</strong> Usa solo Destreza en tiradas de
-                ataque.
-              </li>
-              <li>
-                <strong>Arrojadiza:</strong> Permite atacar a objetivos al
-                alcance y a cercanos.
-              </li>
-              <li>
-                <strong>Alcance:</strong> Permite atacar a objetivos cercanos y
-                a distancia.
-              </li>
-              <li>
-                <strong>Versátil:</strong> Se puede usar con una o dos manos; al
-                usar dos manos, el daño aumenta. Al usar una en cada mano,
-                realizas un segundo ataque con desventaja.
-              </li>
-            </ul>
-            <h3
-              id="armas-y-armaduras-mágicas"
-              ebook-toc-level-3=""
-              heading="<strong>Armas y armaduras mágicas</strong> "
-            >
-              <strong>Armas y armaduras mágicas</strong>
-            </h3>
-            <p>
-              Para crear un arma o armadura mágica o legendaria, simplemente
-              agrega un hechizo utilizando el constructor de hechizos.
-            </p>
-            <h2
-              id="11-constructor-de-hechizos"
-              ebook-toc-level-2=""
-              heading="<strong>11. Constructor de Hechizos</strong> "
-            >
-              <strong>11. Constructor de Hechizos</strong>
-            </h2>
-            <h3 id="ataque" ebook-toc-level-3="" heading="Ataque: ">Ataque:</h3>
-            <p>Causa daño a enemigos</p>
-            <h4
-              id="elemento-elige-uno"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="daño-elige-uno"
-              ebook-toc-level-4=""
-              heading="Daño (elige uno) "
-            >
-              Daño (elige uno)
-            </h4>
-            <ul>
-              <li>Daño 1d12 | Rango de efecto: Corto alcance</li>
-              <li>Daño 1d10 | Rango de efecto: Cercano</li>
-              <li>Daño 1d8 | Rango de efecto: Largo alcance</li>
-              <li>
-                Daño de área 1d10 | Rango de efecto: Corto alcance, máximo 2
-                afectados
-              </li>
-              <li>
-                Daño de área 1d8 | Rango de efecto: Corto alcance, máximo 3
-                afectados
-              </li>
-            </ul>
-            <h4
-              id="efecto-adicional-elige-uno"
-              ebook-toc-level-4=""
-              heading="Efecto adicional (elige uno) "
-            >
-              Efecto adicional (elige uno)
-            </h4>
-            <ul>
-              <li>
-                <strong>Incapacitado/Derribado</strong>: Queda inmobilizado y no
-                puede realizar ninguna otra acción más que la acción de
-                reincorporarse. No afecta a criaturas enormes.
-              </li>
-              <li>
-                <strong>Envenenado/Quemado</strong>: La víctima comienza a
-                "sacudirse las llamas" o "purificar el veneno", el próximo
-                ataque en su contra tiene ventaja.
-              </li>
-              <li>
-                <strong>Paralizado/Congelado/Petrificado</strong>: No puede
-                realizar ninguna acción hasta que un aliado gaste una acción en
-                reincorporarlo o reciba daño. No afecta a criaturas enormes.
-              </li>
-              <li>
-                <strong>Debilidad elemental</strong>: La víctima recibe el doble
-                de daño si es atacada nuevamente con el mismo elemento.
-              </li>
-              <li>
-                <strong>Bloqueo sanador</strong>: La víctima no puede ser sanada
-                hasta que reciba o consiga un golpe crítico.
-              </li>
-            </ul>
-            <h3 id="sanación" ebook-toc-level-3="" heading="Sanación: ">
-              Sanación:
-            </h3>
-            <p>Restaura la salud de los aliados</p>
-            <h4
-              id="elemento-elige-uno-1"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="recuperación-elige-uno"
-              ebook-toc-level-4=""
-              heading="Recuperación (elige uno) "
-            >
-              Recuperación (elige uno)
-            </h4>
-            <ul>
-              <li>Sana 1d12 PG | Rango de efecto: Corto alcance</li>
-              <li>Sana 1d10 PG | Rango de efecto: Cercano</li>
-              <li>Sana 1d8 PG | Rango de efecto: Largo alcance</li>
-              <li>
-                Sana de área 1d10 PG | Rango de efecto: Corto alcance, máximo 2
-                afectados
-              </li>
-              <li>
-                Sana de área 1d8 PG | Rango de efecto: Corto alcance, máximo 3
-                afectados
-              </li>
-            </ul>
-            <h3 id="protección" ebook-toc-level-3="" heading="Protección: ">
-              Protección:
-            </h3>
-            <p>Reduce el daño recibido o bloquea ataques</p>
-            <h4
-              id="elemento-elige-uno-2"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipo-de-protección-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipo de protección (elige uno) "
-            >
-              Tipo de protección (elige uno)
-            </h4>
-            <p><strong>Protección individual (elige uno)</strong></p>
-            <ul>
-              <li>Daño bloqueado 1d10</li>
-              <li>Daño bloqueado 1d12. Sin efecto adicional</li>
-              <li>
-                Aumento en 1d2 CA. Hasta recibir daño. Sin efecto adicional
-              </li>
-              <li>
-                Aumento en 1d6 PG hasta el final del combate. Sin efecto
-                adicional
-              </li>
-            </ul>
-            <p>
-              <strong
-                >Protección para varios personajes a la vez (elige uno)</strong
-              >
-            </p>
-            <ul>
-              <li>Daño bloqueado 1d6</li>
-              <li>Daño bloqueado 1d8 Sin efecto adicional</li>
-              <li>
-                Aumento en 1d2 CA. Hasta recibir daño. El aumento se reparte
-                entre los beneficiados. Sin efecto adicional
-              </li>
-              <li>
-                Aumento en 1d6 PG hasta el final del combate. El aumento se
-                reparte entre los beneficiados. Sin efecto adicional
-              </li>
-            </ul>
-            <h4
-              id="efecto-adicional-elige-uno-1"
-              ebook-toc-level-4=""
-              heading="Efecto adicional (elige uno) "
-            >
-              Efecto adicional (elige uno)
-            </h4>
-            <ul>
-              <li>
-                <strong>Reflectante</strong>: Devuelve el daño bloqueado al
-                agresor que lo causó
-              </li>
-              <li>
-                <strong>Sanador</strong>: El beneficiado recupera una cantidad
-                de PG igual al daño bloqueado por el hechizo
-              </li>
-              <li>
-                <strong>Barrera disuasiva</strong>: Los enemigos que ataquen a
-                alguien protegido lo hacen con desventaja
-              </li>
-            </ul>
-            <h3 id="soporte" ebook-toc-level-3="" heading="Soporte: ">
-              Soporte:
-            </h3>
-            <p>Otorga beneficios a los aliados</p>
-            <h4
-              id="elemento-elige-uno-3"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipo-de-ventaja-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipo de ventaja (elige uno) "
-            >
-              Tipo de ventaja (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Repite la próxima de tirada de ataque o prueba de caracteristica
-                fallida
-              </li>
-              <li>
-                Los enemigos repiten la próxima tirada de ataque exitosa en su
-                contra
-              </li>
-              <li>
-                Gana ventaja en las tiradas de ataque hasta que reciba daño
-              </li>
-              <li>
-                Gana ventaja en las tiradas de ataque hasta que cause daño
-              </li>
-              <li>
-                Los enemigos tiene desventaja en sus ataques hasta que reciba
-                daño
-              </li>
-              <li>
-                Los enemigos tiene desventaja en sus ataques hasta que cause
-                daño
-              </li>
-              <li>
-                Gana +2 en su próxima tirada de ataque o prueba de
-                caracteristica
-              </li>
-              <li>Gana 1d4 de daño en su próximo ataque</li>
-            </ul>
-            <h3 id="control" ebook-toc-level-3="" heading="Control: ">
-              Control:
-            </h3>
-            <p>
-              Manipula o afecta a criaturas u objetos. Es necesario que el
-              lanzador realice una nueva tirada de habilidad en cada turno para
-              mantener el efecto activo.
-            </p>
-            <h4
-              id="elemento-elige-uno-4"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipo-de-control-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipo de control (elige uno) "
-            >
-              Tipo de control (elige uno)
-            </h4>
-            <p><strong>Mental (elige uno)</strong></p>
-            <ul>
-              <li>
-                <strong>Inmobilizar</strong>: La víctima no puede realizar
-                ninguna acción. El lanzador no puede realizar otras acciones
-                mientras dure el control y el efecto termina si este recibe daño
-                o es interrumpido
-              </li>
-              <li>
-                <strong>Asustar</strong>: La víctima huye hasta que uno de sus
-                aliados gaste una acción en reincorporarlo o reciba daño
-              </li>
-              <li>
-                <strong>Encantar</strong>: La víctima considera al lanzador su
-                mejor amigo hasta que reciba daño
-              </li>
-              <li>
-                <strong>Ordenar</strong>: La víctima realiza una acción que el
-                lanzador indique, siempre que esa acción no implique un riesgo
-                para este
-              </li>
-            </ul>
-            <p><strong>Físico (elige uno)</strong></p>
-            <ul>
-              <li>
-                <strong>Inmobilizar</strong>: Los elementos impiden que la
-                víctima se mueva. El lanzador no puede realizar otras acciones
-                mientras dure el control y el efecto termina si este recibe daño
-                o es interrumpido
-              </li>
-              <li>
-                <strong>Desplazar</strong>: Los elementos empujan a la víctima a
-                rango del lanzador
-              </li>
-            </ul>
-            <h3 id="ilusión" ebook-toc-level-3="" heading="Ilusión: ">
-              Ilusión:
-            </h3>
-            <p>
-              Crea ilusiones para confundir. Es necesario que el lanzador
-              realice una nueva tirada de habilidad en cada turno para mantener
-              el efecto activo.
-            </p>
-            <h4
-              id="elemento-elige-uno-5"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipo-de-ilusión-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipo de ilusión (elige uno) "
-            >
-              Tipo de ilusión (elige uno)
-            </h4>
-            <p>
-              <em
-                >Nota: El lanzador no puede realizar otras acciones mientras
-                dura la ilusión y el efecto termina si este recibe daño o es
-                interrumpido</em
-              >
-            </p>
-            <p><strong>Visuales (elige uno)</strong></p>
-            <ul>
-              <li>
-                <strong>Duplicación</strong>: Crea 1d4 copias falsas del
-                objetivo
-              </li>
-              <li>
-                <strong>Transformación</strong>: Transforma apariencia del
-                objetivo o lo hace invisible
-              </li>
-              <li>
-                <strong>Invisibilidad</strong>: Hace invisible al objetivo
-              </li>
-              <li>
-                <strong>Espejismo</strong>: Crea entornos o criaturas falsas
-              </li>
-            </ul>
-            <p><strong>Sensoriales (elige uno)</strong></p>
-            <ul>
-              <li>
-                <strong>Alucinación completa</strong>: La víctima tiene una
-                alucinación, se queda paralizada y no puede realizar ninguna
-                acción, el efecto termina si este recibe daño
-              </li>
-              <li>
-                <strong>Alucinación auditiva</strong>: La víctima tiene una
-                alucinación auditiva que lo confunde, todos los ataques en su
-                contra tienen ventaja
-              </li>
-              <li>
-                <strong>Alucinación visual</strong>: La víctima tiene una
-                alucinación visual que lo confunde, todos sus ataques tienen
-                desventaja
-              </li>
-            </ul>
-            <h3 id="invocación" ebook-toc-level-3="" heading="Invocación: ">
-              Invocación:
-            </h3>
-            <p>
-              Trae criaturas desde otros lugares. Es necesario que el lanzador
-              realice una nueva tirada de habilidad en cada turno para mantener
-              el efecto activo.
-            </p>
-            <h4
-              id="elemento-elige-uno-6"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipos-de-invocación-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipos de invocación (elige uno) "
-            >
-              Tipos de invocación (elige uno)
-            </h4>
-            <p><strong>Invocación de objetos</strong></p>
-            <ul>
-              <li>Invoca uno o más objetos pequeños</li>
-              <li>Invoca un objeto grande</li>
-            </ul>
-            <p>
-              <strong>Invocación de criatura Individual</strong><br />
-              <em
-                >Trae una única criatura que sigue tus órdenes con cierta
-                autonomía</em
-              >
-            </p>
-            <ul>
-              <li>Criaturas elementales</li>
-              <li>Seres arcanos o etéreos</li>
-              <li>Animales o criaturas naturales</li>
-              <li>Criaturas sombrías o demoníacas</li>
-            </ul>
-            <p>
-              <strong>Invocación de criatura Multiple</strong><br />
-              <em
-                >Trae hasta 3 criaturas con el riesgo de que actúen por su
-                cuenta</em
-              >
-            </p>
-            <ul>
-              <li>Criaturas elementales</li>
-              <li>Seres arcanos o etéreos</li>
-              <li>Animales o criaturas naturales</li>
-              <li>Criaturas sombrías o demoníacas</li>
-            </ul>
-            <p>
-              <strong>Invocación de criatura Masiva</strong><br />
-              <em
-                >Trae una criatura grande que actúa completamente
-                independiente</em
-              >
-            </p>
-            <ul>
-              <li>Criaturas elementales</li>
-              <li>Seres arcanos o etéreos</li>
-              <li>Animales o criaturas naturales</li>
-              <li>Criaturas sombrías o demoníacas</li>
-            </ul>
-            <h3 id="movimiento" ebook-toc-level-3="" heading="Movimiento: ">
-              Movimiento:
-            </h3>
-            <p>
-              Permite desplazamiento especial como volar o teletransportarse
-            </p>
-            <h4
-              id="elemento-elige-uno-7"
-              ebook-toc-level-4=""
-              heading="Elemento (elige uno) "
-            >
-              Elemento (elige uno)
-            </h4>
-            <ul>
-              <li>
-                Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
-                Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte,
-                Tiempo, Vacío, Caos.
-              </li>
-            </ul>
-            <h4
-              id="tipos-de-movimiento-elige-uno"
-              ebook-toc-level-4=""
-              heading="Tipos de movimiento (elige uno) "
-            >
-              Tipos de movimiento (elige uno)
-            </h4>
-            <p><strong>Vuelo: Desplazamiento aéreo completo</strong></p>
-            <ul>
-              <li>
-                <strong>Personal</strong>: Solo el lanzador se mueve |
-                Distancia: Muy lejos
-              </li>
-              <li>
-                <strong>Toque</strong>: Puede mover al lanzador y un aliado |
-                Distancia: Hasta donde se pueda ver
-              </li>
-              <li>
-                <strong>Masivo</strong>: Puede mover al lanzador y hasta tres
-                aliados | Distancia: A rango
-              </li>
-            </ul>
-            <p>
-              <strong
-                >Teletransportación: Salto instantáneo entre puntos</strong
-              >
-            </p>
-            <ul>
-              <li>
-                <strong>Personal</strong>: Solo el lanzador se mueve |
-                Distancia: Muy lejos
-              </li>
-              <li>
-                <strong>Toque</strong>: Puede mover al lanzador y un aliado |
-                Distancia: Hasta donde se pueda ver
-              </li>
-              <li>
-                <strong>Masivo</strong>: Puede mover al lanzador y hasta tres
-                aliados | Distancia: A rango
-              </li>
-            </ul>
-            <h2
-              id="12-constructor-de-monstruos"
-              ebook-toc-level-2=""
-              heading="<strong>12. Constructor de Monstruos</strong> "
-            >
-              <strong>12. Constructor de Monstruos</strong>
-            </h2>
-            <p>
-              Plantillas para la creación de monstruos. Puedes usar el
-              <strong>Constructor de Hechizos</strong> para darle a cada
-              monstruo sus habilidades magicas.
-            </p>
-            <p>
-              <strong>Esbirros:</strong><br />
-              <strong>CA:</strong> 20 | <strong>PG:</strong> 5 (x Cantidad de
-              personajes) | <strong>ATQ:</strong> (+2) Ataque (1d4) |
-              <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
-              Rápida (Volando)
-            </p>
-            <hr />
-            <p>
-              <strong>Peligrosos:</strong><br />
-              <strong>CA:</strong> 30 | <strong>PG:</strong> 9 (x Cantidad de
-              personajes) | <strong>ATQ:</strong> (+2) Ataque (1d6) |
-              <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
-              Rápida (Volando)
-            </p>
-            <hr />
-            <p>
-              <strong>Muy Peligrosos:</strong><br />
-              <strong>CA:</strong> 40 | <strong>PG:</strong> 12 (x Cantidad de
-              personajes) | <strong>ATQ:</strong> (+2) Ataque (1d8) / Hechizo
-              (Ver abajo) | <strong>MOV:</strong> Constante (En tierra) /
-              Limitada (Nadando) / Rápida (Volando)
-            </p>
-            <ul>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-            </ul>
-            <hr />
-            <p>
-              <strong>Jefes:</strong><br />
-              <strong>CA:</strong> 50 | <strong>PG:</strong> 16 (x Cantidad de
-              personajes) | <strong>ATQ:</strong> (+2) Ataque (1d10) / Hechizo
-              (Ver abajo) | <strong>MOV:</strong> Constante (En tierra) /
-              Limitada (Nadando) / Rápida (Volando)
-            </p>
-            <ul>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-            </ul>
-            <hr />
-            <p>
-              <strong>Legendarios:</strong><br />
-              <strong>CA:</strong> 60 | <strong>PG:</strong> 20 (x Cantidad de
-              personajes) | <strong>ATQ:</strong> (+2) Ataque (1d12) / Hechizo
-              (Ver abajo) | <strong>MOV:</strong> Constante (En tierra) /
-              Limitada (Nadando) / Rápida (Volando)
-            </p>
-            <ul>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-              <li>
-                <strong>Habilidad o hechizo:</strong> Descripción del hechizo.
-              </li>
-            </ul>
-            <h2
-              id="13-escenas"
-              ebook-toc-level-2=""
-              heading="<strong>13. Escenas</strong> "
-            >
-              <strong>13. Escenas</strong>
-            </h2>
-            <h3
-              id="escenas-de-exploración"
-              ebook-toc-level-3=""
-              heading="Escenas de exploración "
-            >
-              Escenas de exploración
-            </h3>
-            <ul>
-              <li>
-                Los personajes investigan el entorno, buscan pistas y deciden
-                qué hacer.
-              </li>
-              <li>
-                Ejemplo: Examinar una habitación en busca de trampas o hablar
-                con un NPC.
-              </li>
-            </ul>
-            <h3
-              id="escenas-de-combate-o-acción"
-              ebook-toc-level-3=""
-              heading="Escenas de combate o acción "
-            >
-              Escenas de combate o acción
-            </h3>
-            <ul>
-              <li>Más estructuradas: los personajes actúan por turnos.</li>
-              <li>
-                Cada turno permite realizar
-                <strong>una acción específica</strong>, como atacar, usar una
-                habilidad o ayudar a un aliado.
-              </li>
-            </ul>
-            <h3
-              id="finalización-de-escenas"
-              ebook-toc-level-3=""
-              heading="Finalización de escenas "
-            >
-              Finalización de escenas
-            </h3>
-            <p>
-              Al finalizar una escena la narrativa avanza hacia una nueva etapa
-              o situación.
-            </p>
-          </div>
-        </body>
-      </html>
-    </div>
+  <body>
+    <main style="margin: 15px; font-family: Montserrat;">
+      <img
+        style="margin-bottom: 50px"
+        src="https://koteldur.github.io/dracon/logo24.svg"
+        alt="Stylized dragon head logo with bold lines and a circular background, conveying a sense of adventure and fantasy, no visible text, set against a plain white environment"
+        width="400"
+      />
+
+      <h2><strong>Introducción</strong></h2>
+      <hr />
+      <p>
+        OSR (Old School Revival) busca recuperar la esencia de los primeros
+        juegos de rol, especialmente Dungeons & Dragons de los años 70 y 80.
+        Esto se traduce en reglas simples, un alto riesgo de muerte y un fuerte
+        énfasis en la exploración y la creatividad.
+      </p>
+
+      <h2><strong>Creación de personaje</strong></h2>
+      <hr />
+
+      <h3><strong>Nombre y Trasfondo</strong></h3>
+      <p>
+        Tu historia comienza con una simple pregunta: ¿Quién es tu personaje?<br />
+        Después de nombrar a tu personaje, dale un trasfondo que determine las
+        motivaciones que impulsan sus acciones.
+      </p>
+      <blockquote>
+        Los personajes no están limitados por clases predefinidas; su identidad
+        y habilidades se determinan por lo que llevan y cómo lo usan.
+      </blockquote>
+
+      <h3><strong>Características</strong></h3>
+      <p>
+        Elige un paquete de características, puedes asignar directamente estos
+        valores predeterminados basándote en la orientación de tu personaje.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de Personaje</th>
+            <th>Fuerza</th>
+            <th>Destreza</th>
+            <th>Constitución</th>
+            <th>Inteligencia</th>
+            <th>Sabiduría</th>
+            <th>Carisma</th>
+            <th>Puntos de Golpe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Combate cuerpo a cuerpo</strong></td>
+            <td>18 (+3)</td>
+            <td>13 (+1)</td>
+            <td>15 (+2)</td>
+            <td>9 (0)</td>
+            <td>10 (0)</td>
+            <td>11 (0)</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td><strong>Defensa y protección</strong></td>
+            <td>15 (+2)</td>
+            <td>11 (0)</td>
+            <td>18 (+3)</td>
+            <td>9 (0)</td>
+            <td>14 (+2)</td>
+            <td>10 (0)</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td><strong>Usuario de la mágia</strong></td>
+            <td>8 (-1)</td>
+            <td>11 (0)</td>
+            <td>10 (0)</td>
+            <td>18 (+3)</td>
+            <td>14 (+2)</td>
+            <td>13 (+1)</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td><strong>Ágil y sigiloso</strong></td>
+            <td>11 (0)</td>
+            <td>18 (+3)</td>
+            <td>13 (+1)</td>
+            <td>15 (+2)</td>
+            <td>11 (0)</td>
+            <td>14 (+2)</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td><strong>Versátil y balanceado</strong></td>
+            <td>13 (+1)</td>
+            <td>14 (+2)</td>
+            <td>13 (+1)</td>
+            <td>14 (+2)</td>
+            <td>13 (+1)</td>
+            <td>14 (+2)</td>
+            <td>15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3><strong>Equipo Inicial</strong></h3>
+      <p>Tu personaje comienza con:</p>
+      <ul>
+        <li>
+          <strong>Elige dos armas de su elección:</strong> (Puedes construirla
+          en el <strong>Constructor de Armas</strong>).
+        </li>
+        <li>
+          <strong>Equipo inicial:</strong> (Según la lista de
+          <strong>Tabla de Objetos mundanos</strong>).
+        </li>
+        <li><strong>Dinero:</strong> (3d6x20) dracones.</li>
+        <li>
+          <strong>Los libros de hechizos:</strong> Elige uno al inicio, el resto
+          pueden encontrarse durante las aventuras.
+        </li>
+      </ul>
+
+      <h3><strong>Espacios de Inventario</strong></h3>
+      <p>
+        Tu personaje tiene <strong>15 espacios</strong> en su mochila para
+        llevar objetos.
+      </p>
+      <ul>
+        <li>
+          Todos los objetos ocupan <strong>1 espacio de inventario</strong>.
+        </li>
+        <li>
+          Los objetos pequeños <strong>no ocupan espacio</strong> (por ejemplo,
+          monedas).
+        </li>
+      </ul>
+
+      <h3><strong>Armadura</strong></h3>
+      <p>
+        La <strong>Clase de Armadura (CA)</strong> representa la defensa de tu
+        personaje y la dificultad que tienen los enemigos para golpearlo. Una CA
+        más alta significa una mejor protección.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de Armadura</th>
+            <th>CA</th>
+            <th>Requsitos</th>
+            <th>Ventajas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Armadura ligera</td>
+            <td>12</td>
+            <td>Ninguno</td>
+            <td>Ninguno</td>
+          </tr>
+          <tr>
+            <td>Armadura media</td>
+            <td>14</td>
+            <td>Ninguno</td>
+            <td>Ninguno</td>
+          </tr>
+          <tr>
+            <td>Armadura pesada</td>
+            <td>16</td>
+            <td>Requiere 18+ de Fuerza</td>
+            <td>Ninguno</td>
+          </tr>
+          <tr>
+            <td>Escudo</td>
+            <td>+1</td>
+            <td>Ninguno</td>
+            <td>Se suma a la CA</td>
+          </tr>
+          <tr>
+            <td>Escudo Pavés</td>
+            <td>+2</td>
+            <td>Requiere 18+ de Fuerza</td>
+            <td>Se suma a la CA</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        El bonificador de Destreza no se aplica a la Clase de Armadura (CA) base
+        cuando se utiliza armadura pesada o armadura media. En el caso de las
+        armaduras ligeras, el bonificador de Destreza sí se suma a la CA base,
+        ya que este tipo de armadura está diseñada para permitir movilidad y
+        aprovechar las habilidades ágiles del portador.
+      </p>
+      <p>
+        Cuando tu personaje no usa armadura su CA será (10 + su bonificación de
+        destreza).
+      </p>
+
+      <h2><strong>Pruebas de Características</strong></h2>
+      <hr />
+      <p>Cada desafío tiene una <strong>Clase de Dificultad (CD)</strong>:</p>
+      <ul>
+        <li><strong>10</strong> → Fácil</li>
+        <li><strong>20</strong> → Difícil</li>
+        <li><strong>30</strong> → Casi imposible</li>
+      </ul>
+      <p>Para hacer una prueba:</p>
+      <ul>
+        <li>
+          <strong>Lanza 1d20</strong> y suma el Bonificador de Característica de
+          tu personaje.
+        </li>
+        <li>
+          Si el resultado es igual o mayor a la CD, tu
+          <strong>personaje tiene éxito</strong>.
+        </li>
+        <li>El DM define qué característica es adecuada para la prueba.</li>
+      </ul>
+
+      <h2><strong>Combate</strong></h2>
+      <hr />
+
+      <h3><strong>Iniciativa</strong></h3>
+      <ul>
+        <li>
+          Los personajes <strong>siempre actúan primero</strong>, excepto en
+          emboscadas.
+        </li>
+      </ul>
+
+      <h3><strong>Acciones en el Turno</strong></h3>
+      <p>En tu turno, tu personaje puede realizar diversas acciones, como:</p>
+      <ul>
+        <li>Moverse.</li>
+        <li>Atacar.</li>
+        <li>Lanzar hechizos.</li>
+        <li>Realizar otras acciones razonables.</li>
+      </ul>
+
+      <h3><strong>Resolución de Ataques</strong></h3>
+      <p>Para determinar si un ataque tiene éxito:</p>
+      <ul>
+        <li>
+          <strong>Lanza 1d20</strong> y suma el bonificador: Fuerza para ataques
+          cuerpo a cuerpo. Destreza para ataques a distancia. Inteligencia para
+          ataques mágicos.
+        </li>
+        <li><strong>Compara el resultado con la CA del objetivo.</strong></li>
+        <li>
+          Si el resultado es <strong>mayor</strong> que la CA del objetivo, el
+          ataque de tu personaje acierta y debes tirar el daño de arma.<br />
+          Si un personaje ataca con un modificador de +4 y saca un
+          <strong>12</strong> en el d20, su total es <strong>16</strong>.<br />
+          Si el enemigo tiene <strong>CA 14</strong>, el ataque
+          <strong>acierta</strong> y se tira el daño.<br />
+          Si el enemigo tuviera <strong>CA 17</strong>, el ataque
+          <strong>fallaría</strong>.
+        </li>
+      </ul>
+
+      <h4><strong>Ataque de un monstruo</strong></h4>
+      <ul>
+        <li>
+          <strong>Lanza 1d20</strong> + bonificador de ataque del monstruo
+        </li>
+        <li><strong>Compara el resultado con la CA del objetivo.</strong></li>
+        <li>
+          Si el resultado es <strong>mayor</strong> que la CA del objetivo, el
+          ataque acierta y se tira el daño de arma.
+        </li>
+      </ul>
+      <blockquote>
+        Los monstruos tienen un modificador de ataque específico indicado en su
+        sección <strong>ATQ</strong>.
+      </blockquote>
+
+      <h4><strong>Daño de arma</strong></h4>
+      <p>
+        Al calcular el daño con un arma, suma el bonificador de Fuerza si es un
+        arma cuerpo a cuerpo, o el de Destreza si es un arma a distancia o
+        ligera o ágil.
+      </p>
+      <blockquote>
+        Un pícaro con +2 de Destreza y una daga (1d4 de daño) causará 1d4 + 2 de
+        daño.
+      </blockquote>
+
+      <h3><strong>Críticos y Fallos</strong></h3>
+      <ul>
+        <li><strong>Crítico (20 natural):</strong> Doble daño.</li>
+        <li>
+          <strong>Fallo crítico (1 natural):</strong> Consecuencia narrativa
+          (caída, arma rota, etc.).
+        </li>
+      </ul>
+
+      <h2><strong>Distancias y movimiento</strong></h2>
+      <hr />
+      <p>
+        Las distancias se manejan de manera intuitiva y simple para facilitar la
+        narrativa y el flujo del juego. Los jugadores evalúan la distancia en
+        términos de la capacidad para interactuar de los personajes con enemigos
+        o elementos en el entorno, como se describe aquí:
+      </p>
+      <ul>
+        <li>
+          <strong>Corto alcance:</strong> El objetivo está lo suficientemente
+          cerca como para tocarlo o golpearlo desde donde estás. Esto incluye
+          acciones cuerpo a cuerpo.
+        </li>
+        <li>
+          <strong>Cercano:</strong> El objetivo está cerca, pero no dentro de tu
+          alcance inmediato. Puedes moverte durante tu turno para colocarte al
+          alcance de él.
+        </li>
+        <li>
+          <strong>Largo alcance:</strong> El objetivo está lo suficientemente
+          lejos como para ser alcanzado con un ataque a distancia (por ejemplo,
+          un arco o hechizo).
+        </li>
+        <li>
+          <strong>Demasiado lejos:</strong> El objetivo está fuera de tu
+          alcance, incluso con ataques a distancia. Tendrás que acercarte para
+          interactuar.
+        </li>
+      </ul>
+      <blockquote>
+        Se necesita una acción de movimiento para pasar de corto alcance a
+        Cercano, o de Cercano a larga discancia.
+      </blockquote>
+
+      <h2><strong>Monstruos</strong></h2>
+      <hr />
+
+      <h3><strong>Ficha de Monstruo</strong></h3>
+      <p>
+        <strong>Esqueleto volador:</strong> Forjado con magia oscura, estos
+        esqueletos son guardianes incansables de ruinas antiguas.<br />
+        <strong>CA:</strong> 4 | <strong>PG:</strong> 4 |
+        <strong>ATQ:</strong> (+2) Garras (1d4) / Jaula de huesos |
+        <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
+        Rápida (Volando)
+      </p>
+      <ul>
+        <li>
+          <strong>Jaula de huesos:</strong> Una vez por combate, salen huesos de
+          la tierra, impiden que la víctima se mueva. El esqueleto no puede
+          realizar otras acciones mientras dure el control y el efecto termina
+          si este recibe daño o es interrumpido.
+        </li>
+      </ul>
+
+      <h2><strong>Magia</strong></h2>
+      <hr />
+      <p>
+        Cada hechizo está registrado en un libro, y cada uno ocupa 1 espacio de
+        inventario. El lanzador solo puede ejecutar un hechizo una vez antes de
+        necesitar descansar para recuperarse y poder lanzarlo de nuevo.
+      </p>
+      <p>
+        En el caso de los hechizos que tienen efectos prolongados, es necesario
+        realizar una nueva tirada de habilidad en cada turno para mantener el
+        efecto activo.
+      </p>
+
+      <h3><strong>Para lanzar un hechizo de ataque</strong></h3>
+      <ul>
+        <li>
+          Lanza 1d20 y <strong>suma el bonificador</strong> de su puntuación de
+          característica más alto
+        </li>
+        <li>
+          Compara el resultado con la <strong>CA del objetivo</strong> para
+          saber si el ataque de tu personaje acierta.
+        </li>
+        <li>
+          Si el resultado es <strong>igual o mayor</strong> que la CA del
+          objetivo, el ataque acierta y se tira el daño correspondiente. Si
+          falla, el hechizo no surte efecto.
+        </li>
+      </ul>
+
+      <h3><strong>Para lanzar un hechizo de utilidad</strong></h3>
+      <p>
+        Para lanzar un hechizo de utilidad, el jugador tira 1d20 y
+        <strong>suma el bonificador</strong> de su característica más alta. Si
+        el resultado es <strong>igual o mayor</strong> que el valor de esa
+        característica, el hechizo se ejecuta con éxito. Si falla, no surte
+        efecto; si el resultado es un 1 natural, el fallo crítico puede
+        desencadenar peligros graves según el criterio del DM.
+      </p>
+
+      <h2><strong>Descanso</strong></h2>
+      <hr />
+
+      <h3>Tipos de Descanso</h3>
+      <ul>
+        <li>
+          <strong>Descanso breve</strong>
+          <ul>
+            <li>El personaje recupera 2d10 PG</li>
+            <li>El personaje recupera 1d6 hechizos</li>
+            <li>
+              <strong>Limitaciones</strong>
+              <ul>
+                <li>Puede realizarse 1 vez entre descansos prolongados</li>
+                <li>Requiere un refugio seguro o un entorno protegido</li>
+                <li>
+                  El DM determina un cambio de escena o un lapso de tiempo
+                  significativo para que este descanso sea válido.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Descanso prolongado</strong>
+          <ul>
+            <li>El personaje recupera todos los PG</li>
+            <li>El personaje recupera todos los hechizos</li>
+            <li>
+              <strong>Limitaciones</strong>
+              <ul>
+                <li>
+                  Requiere un asentamiento civilizado (pueblo, ciudad, taberna)
+                </li>
+                <li>
+                  El DM determina un cambio de búsqueda o un lapso de tiempo
+                  significativo para que este descanso sea válido.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3><strong>Refugio seguro</strong></h3>
+      <ul>
+        <li>Un asentamiento civilizado (pueblo, ciudad, taberna)</li>
+        <li>
+          Una zona específicamente protegida (templo consagrado, refugio
+          sellado)
+        </li>
+        <li>
+          Un área que ha sido totalmente asegurada por los personajes (todos los
+          monstruos eliminados, entradas bloqueadas/vigiladas)
+        </li>
+        <li>Un campamento fortificado con protecciones físicas y/o mágicas</li>
+      </ul>
+
+      <h2><strong>Constructor de Armas</strong></h2>
+      <hr />
+
+      <h3><strong>Armas Cuerpo a Cuerpo</strong></h3>
+
+      <h4><strong>Armas Ligeras</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d4 (una mano).</li>
+        <li><strong>Propiedades disponibles:</strong> Ágil, Arrojadiza.</li>
+        <li>
+          <strong>Notas:</strong> Ideales para combate rápido y personajes que
+          prioricen destreza sobre fuerza.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Estándar</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d6 (una mano) / 1d8 (dos manos).</li>
+        <li><strong>Propiedades disponibles:</strong> Ágil, Versátil.</li>
+        <li>
+          <strong>Notas:</strong> Balanceadas para personajes que buscan
+          flexibilidad en combate.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Pesadas</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d10 (dos manos).</li>
+        <li><strong>Propiedades disponibles:</strong> Potente.</li>
+        <li>
+          <strong>Notas:</strong> Requieren fuerza y ocupan ambas manos,
+          ofreciendo gran daño a costa de movilidad.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Brutales</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 2d6 (dos manos).</li>
+        <li><strong>Propiedades disponibles:</strong> Potente.</li>
+        <li><strong>Restricción:</strong> Requiere 18+ de Fuerza.</li>
+        <li>
+          <strong>Notas:</strong> Máximas en daño, ideales para guerreros
+          fuertes que priorizan poder sobre otras ventajas. Los personajes
+          pequeños tienen desventaja al usarla.
+        </li>
+      </ul>
+
+      <h3><strong>Armas a Distancia</strong></h3>
+
+      <h4><strong>Armas Ligeras</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d4 (una mano).</li>
+        <li><strong>Propiedades disponibles:</strong> Arrojadiza, Precisa.</li>
+        <li>
+          <strong>Notas:</strong> Compactas y útiles para combates rápidos a
+          corto alcance.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Estándar a Distancia</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d8 (dos manos).</li>
+        <li><strong>Propiedades disponibles:</strong> Precisa.</li>
+        <li>
+          <strong>Notas:</strong> Excelente opción para ataques a distancia
+          sostenidos.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Pesadas a Distancia</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d10 (dos manos).</li>
+        <li><strong>Propiedades disponibles:</strong> Precisa.</li>
+        <li>
+          <strong>Notas:</strong> Requieren ambas manos y son poderosas a largas
+          distancias. Los personajes pequeños tienen desventaja al usarla.
+        </li>
+      </ul>
+
+      <h4><strong>Armas Brutal a Distancia</strong></h4>
+      <ul>
+        <li><strong>Daño:</strong> 1d12 (dos manos).</li>
+        <li>
+          <strong>Propiedades disponibles:</strong> Requiere un turno para
+          recargar.
+        </li>
+        <li>
+          <strong>Notas:</strong> Requieren ambas manos y son poderosas a largas
+          distancias. Los personajes pequeños tienen desventaja al usarla.
+        </li>
+      </ul>
+
+      <h3><strong>Propiedades de las Armas</strong></h3>
+      <ul>
+        <li>
+          <strong>Ágil:</strong> Usa Destreza o Fuerza en tiradas de ataque.
+        </li>
+        <li><strong>Potente:</strong> Usa solo Fuerza en tiradas de ataque.</li>
+        <li>
+          <strong>Precisa:</strong> Usa solo Destreza en tiradas de ataque.
+        </li>
+        <li>
+          <strong>Arrojadiza:</strong> Permite atacar a objetivos al alcance y a
+          cercanos.
+        </li>
+        <li>
+          <strong>Alcance:</strong> Permite atacar a objetivos cercanos y a
+          distancia.
+        </li>
+        <li>
+          <strong>Versátil:</strong> Se puede usar con una o dos manos; al usar
+          dos manos, el daño aumenta. Al usar una en cada mano, realizas un
+          segundo ataque con desventaja.
+        </li>
+      </ul>
+      <p>
+        <strong>Armas y armaduras mágicas</strong><br />
+        Para crear un arma o armadura mágica o legendaria, simplemente agrega un
+        hechizo utilizando el constructor de hechizos.
+      </p>
+
+      <h2><strong>Constructor de Hechizos</strong></h2>
+      <hr />
+      <h3>Ataque:</h3>
+      <p>Causa daño a enemigos</p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Daño (elige uno)</h4>
+      <ul>
+        <li>Daño 1d12 | Rango de efecto: Corto alcance</li>
+        <li>Daño 1d10 | Rango de efecto: Cercano</li>
+        <li>Daño 1d8 | Rango de efecto: Largo alcance</li>
+        <li>
+          Daño de área 1d10 | Rango de efecto: Corto alcance, máximo 2 afectados
+        </li>
+        <li>
+          Daño de área 1d8 | Rango de efecto: Corto alcance, máximo 3 afectados
+        </li>
+      </ul>
+      <h4>Efecto adicional (elige uno)</h4>
+      <ul>
+        <li>
+          <strong>Incapacitado/Derribado</strong>: Queda inmobilizado y no puede
+          realizar ninguna otra acción más que la acción de reincorporarse. No
+          afecta a criaturas enormes.
+        </li>
+        <li>
+          <strong>Envenenado/Quemado</strong>: La víctima comienza a "sacudirse
+          las llamas" o "purificar el veneno", el próximo ataque en su contra
+          tiene ventaja.
+        </li>
+        <li>
+          <strong>Paralizado/Congelado/Petrificado</strong>: No puede realizar
+          ninguna acción hasta que un aliado gaste una acción en reincorporarlo
+          o reciba daño. No afecta a criaturas enormes.
+        </li>
+        <li>
+          <strong>Debilidad elemental</strong>: La víctima recibe el doble de
+          daño si es atacada nuevamente con el mismo elemento.
+        </li>
+        <li>
+          <strong>Bloqueo sanador</strong>: La víctima no puede ser sanada hasta
+          que reciba o consiga un golpe crítico.
+        </li>
+      </ul>
+
+      <h3>Sanación:</h3>
+      <p>Restaura la salud de los aliados</p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Recuperación (elige uno)</h4>
+      <ul>
+        <li>Sana 1d12 PG | Rango de efecto: Corto alcance</li>
+        <li>Sana 1d10 PG | Rango de efecto: Cercano</li>
+        <li>Sana 1d8 PG | Rango de efecto: Largo alcance</li>
+        <li>
+          Sana de área 1d10 PG | Rango de efecto: Corto alcance, máximo 2
+          afectados
+        </li>
+        <li>
+          Sana de área 1d8 PG | Rango de efecto: Corto alcance, máximo 3
+          afectados
+        </li>
+      </ul>
+
+      <h3>Protección:</h3>
+      <p>Reduce el daño recibido o bloquea ataques</p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipo de protección (elige uno)</h4>
+      <p><strong>Protección individual (elige uno)</strong></p>
+      <ul>
+        <li>Daño bloqueado 1d10</li>
+        <li>Daño bloqueado 1d12. Sin efecto adicional</li>
+        <li>Aumento en 1d2 CA. Hasta recibir daño. Sin efecto adicional</li>
+        <li>
+          Aumento en 1d6 PG hasta el final del combate. Sin efecto adicional
+        </li>
+      </ul>
+      <p>
+        <strong>Protección para varios personajes a la vez (elige uno)</strong>
+      </p>
+      <ul>
+        <li>Daño bloqueado 1d6</li>
+        <li>Daño bloqueado 1d8 Sin efecto adicional</li>
+        <li>
+          Aumento en 1d2 CA. Hasta recibir daño. El aumento se reparte entre los
+          beneficiados. Sin efecto adicional
+        </li>
+        <li>
+          Aumento en 1d6 PG hasta el final del combate. El aumento se reparte
+          entre los beneficiados. Sin efecto adicional
+        </li>
+      </ul>
+      <h4>Efecto adicional (elige uno)</h4>
+      <ul>
+        <li>
+          <strong>Reflectante</strong>: Devuelve el daño bloqueado al agresor
+          que lo causó
+        </li>
+        <li>
+          <strong>Sanador</strong>: El beneficiado recupera una cantidad de PG
+          igual al daño bloqueado por el hechizo
+        </li>
+        <li>
+          <strong>Barrera disuasiva</strong>: Los enemigos que ataquen a alguien
+          protegido lo hacen con desventaja
+        </li>
+      </ul>
+
+      <h3>Soporte:</h3>
+      <p>Otorga beneficios a los aliados</p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipo de ventaja (elige uno)</h4>
+      <ul>
+        <li>
+          Repite la próxima de tirada de ataque o prueba de caracteristica
+          fallida
+        </li>
+        <li>
+          Los enemigos repiten la próxima tirada de ataque exitosa en su contra
+        </li>
+        <li>Gana ventaja en las tiradas de ataque hasta que reciba daño</li>
+        <li>Gana ventaja en las tiradas de ataque hasta que cause daño</li>
+        <li>
+          Los enemigos tiene desventaja en sus ataques hasta que reciba daño
+        </li>
+        <li>
+          Los enemigos tiene desventaja en sus ataques hasta que cause daño
+        </li>
+        <li>
+          Gana +2 en su próxima tirada de ataque o prueba de caracteristica
+        </li>
+        <li>Gana 1d4 de daño en su próximo ataque</li>
+      </ul>
+
+      <h3>Control:</h3>
+      <p>
+        Manipula o afecta a criaturas u objetos. Es necesario que el lanzador
+        realice una nueva tirada de habilidad en cada turno para mantener el
+        efecto activo.
+      </p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipo de control (elige uno)</h4>
+      <p><strong>Mental (elige uno)</strong></p>
+      <ul>
+        <li>
+          <strong>Inmobilizar</strong>: La víctima no puede realizar ninguna
+          acción. El lanzador no puede realizar otras acciones mientras dure el
+          control y el efecto termina si este recibe daño o es interrumpido
+        </li>
+        <li>
+          <strong>Asustar</strong>: La víctima huye hasta que uno de sus aliados
+          gaste una acción en reincorporarlo o reciba daño
+        </li>
+        <li>
+          <strong>Encantar</strong>: La víctima considera al lanzador su mejor
+          amigo hasta que reciba daño
+        </li>
+        <li>
+          <strong>Ordenar</strong>: La víctima realiza una acción que el
+          lanzador indique, siempre que esa acción no implique un riesgo para
+          este
+        </li>
+      </ul>
+      <p><strong>Físico (elige uno)</strong></p>
+      <ul>
+        <li>
+          <strong>Inmobilizar</strong>: Los elementos impiden que la víctima se
+          mueva. El lanzador no puede realizar otras acciones mientras dure el
+          control y el efecto termina si este recibe daño o es interrumpido
+        </li>
+        <li>
+          <strong>Desplazar</strong>: Los elementos empujan a la víctima a rango
+          del lanzador
+        </li>
+      </ul>
+
+      <h3>Ilusión:</h3>
+      <p>
+        Crea ilusiones para confundir. Es necesario que el lanzador realice una
+        nueva tirada de habilidad en cada turno para mantener el efecto activo.
+      </p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipo de ilusión (elige uno)</h4>
+      <p>
+        <em
+          >Nota: El lanzador no puede realizar otras acciones mientras dura la
+          ilusión y el efecto termina si este recibe daño o es interrumpido</em
+        >
+      </p>
+      <p><strong>Visuales (elige uno)</strong></p>
+      <ul>
+        <li>
+          <strong>Duplicación</strong>: Crea 1d4 copias falsas del objetivo
+        </li>
+        <li>
+          <strong>Transformación</strong>: Transforma apariencia del objetivo o
+          lo hace invisible
+        </li>
+        <li><strong>Invisibilidad</strong>: Hace invisible al objetivo</li>
+        <li><strong>Espejismo</strong>: Crea entornos o criaturas falsas</li>
+      </ul>
+      <p><strong>Sensoriales (elige uno)</strong></p>
+      <ul>
+        <li>
+          <strong>Alucinación completa</strong>: La víctima tiene una
+          alucinación, se queda paralizada y no puede realizar ninguna acción,
+          el efecto termina si este recibe daño
+        </li>
+        <li>
+          <strong>Alucinación auditiva</strong>: La víctima tiene una
+          alucinación auditiva que lo confunde, todos los ataques en su contra
+          tienen ventaja
+        </li>
+        <li>
+          <strong>Alucinación visual</strong>: La víctima tiene una alucinación
+          visual que lo confunde, todos sus ataques tienen desventaja
+        </li>
+      </ul>
+
+      <h3>Invocación:</h3>
+      <p>
+        Trae criaturas desde otros lugares. Es necesario que el lanzador realice
+        una nueva tirada de habilidad en cada turno para mantener el efecto
+        activo.
+      </p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipos de invocación (elige uno)</h4>
+      <p><strong>Invocación de objetos</strong></p>
+      <ul>
+        <li>Invoca uno o más objetos pequeños</li>
+        <li>Invoca un objeto grande</li>
+      </ul>
+      <p>
+        <strong>Invocación de criatura Individual</strong><br />
+        <em
+          >Trae una única criatura que sigue tus órdenes con cierta
+          autonomía</em
+        >
+      </p>
+      <ul>
+        <li>Criaturas elementales</li>
+        <li>Seres arcanos o etéreos</li>
+        <li>Animales o criaturas naturales</li>
+        <li>Criaturas sombrías o demoníacas</li>
+      </ul>
+      <p>
+        <strong>Invocación de criatura Multiple</strong><br />
+        <em
+          >Trae hasta 3 criaturas con el riesgo de que actúen por su cuenta</em
+        >
+      </p>
+      <ul>
+        <li>Criaturas elementales</li>
+        <li>Seres arcanos o etéreos</li>
+        <li>Animales o criaturas naturales</li>
+        <li>Criaturas sombrías o demoníacas</li>
+      </ul>
+      <p>
+        <strong>Invocación de criatura Masiva</strong><br />
+        <em>Trae una criatura grande que actúa completamente independiente</em>
+      </p>
+      <ul>
+        <li>Criaturas elementales</li>
+        <li>Seres arcanos o etéreos</li>
+        <li>Animales o criaturas naturales</li>
+        <li>Criaturas sombrías o demoníacas</li>
+      </ul>
+
+      <h3>Movimiento:</h3>
+      <p>Permite desplazamiento especial como volar o teletransportarse</p>
+      <h4>Elemento (elige uno)</h4>
+      <ul>
+        <li>
+          Fuego, Hielo, Agua, Viento, Rayo, Tierra, Fuerza, Sagrado, Luz,
+          Oscuridad, Naturaleza, Sangre, Arcano, Mente, Vida, Muerte, Tiempo,
+          Vacío, Caos.
+        </li>
+      </ul>
+      <h4>Tipos de movimiento (elige uno)</h4>
+      <p><strong>Vuelo: Desplazamiento aéreo completo</strong></p>
+      <ul>
+        <li>
+          <strong>Personal</strong>: Solo el lanzador se mueve | Distancia: Muy
+          lejos
+        </li>
+        <li>
+          <strong>Toque</strong>: Puede mover al lanzador y un aliado |
+          Distancia: Hasta donde se pueda ver
+        </li>
+        <li>
+          <strong>Masivo</strong>: Puede mover al lanzador y hasta tres aliados
+          | Distancia: A rango
+        </li>
+      </ul>
+      <p><strong>Teletransportación: Salto instantáneo entre puntos</strong></p>
+      <ul>
+        <li>
+          <strong>Personal</strong>: Solo el lanzador se mueve | Distancia: Muy
+          lejos
+        </li>
+        <li>
+          <strong>Toque</strong>: Puede mover al lanzador y un aliado |
+          Distancia: Hasta donde se pueda ver
+        </li>
+        <li>
+          <strong>Masivo</strong>: Puede mover al lanzador y hasta tres aliados
+          | Distancia: A rango
+        </li>
+      </ul>
+
+      <h2><strong>Constructor de Monstruos</strong></h2>
+      <hr />
+      <p>
+        Plantillas para la creación de monstruos. Puedes usar el
+        <strong>Constructor de Hechizos</strong> para darle a cada monstruo sus
+        habilidades magicas.
+      </p>
+      <p>
+        <strong>Esbirros:</strong><br />
+        <strong>CA:</strong> 4 | <strong>PG:</strong> 5 (x Cantidad de
+        personajes) | <strong>ATQ:</strong> (+2) Ataque (1d4) |
+        <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
+        Rápida (Volando)
+      </p>
+      <hr />
+      <p>
+        <strong>Peligrosos:</strong><br />
+        <strong>CA:</strong> 8 | <strong>PG:</strong> 9 (x Cantidad de
+        personajes) | <strong>ATQ:</strong> (+2) Ataque (1d6) |
+        <strong>MOV:</strong> Constante (En tierra) / Limitada (Nadando) /
+        Rápida (Volando)
+      </p>
+      <hr />
+      <p>
+        <strong>Muy Peligrosos:</strong><br />
+        <strong>CA:</strong> 12 | <strong>PG:</strong> 12 (x Cantidad de
+        personajes) | <strong>ATQ:</strong> (+2) Ataque (1d8) / Hechizo (Ver
+        abajo) | <strong>MOV:</strong> Constante (En tierra) / Limitada
+        (Nadando) / Rápida (Volando)
+      </p>
+
+      <p>Agrega 1 Habilidad o hechizo</p>
+
+      <hr />
+      <p>
+        <strong>Jefes:</strong><br />
+        <strong>CA:</strong> 16 | <strong>PG:</strong> 16 (x Cantidad de
+        personajes) | <strong>ATQ:</strong> (+2) Ataque (1d10) / Hechizo (Ver
+        abajo) | <strong>MOV:</strong> Constante (En tierra) / Limitada
+        (Nadando) / Rápida (Volando)
+      </p>
+      <p>Agrega 2 Habilidades o hechizos</p>
+      <hr />
+      <p>
+        <strong>Legendarios:</strong><br />
+        <strong>CA:</strong> 18 | <strong>PG:</strong> 20 (x Cantidad de
+        personajes) | <strong>ATQ:</strong> (+2) Ataque (1d12) / Hechizo (Ver
+        abajo) | <strong>MOV:</strong> Constante (En tierra) / Limitada
+        (Nadando) / Rápida (Volando)
+      </p>
+      <p>Agrega 3 Habilidades o hechizos</p>
+
+      <h2><strong>13. Escenas</strong></h2>
+      <hr />
+      <h3>Escenas de exploración</h3>
+      <ul>
+        <li>
+          Los personajes investigan el entorno, buscan pistas y deciden qué
+          hacer.
+        </li>
+        <li>
+          Ejemplo: Examinar una habitación en busca de trampas o hablar con un
+          NPC.
+        </li>
+      </ul>
+      <h3>Escenas de combate o acción</h3>
+      <ul>
+        <li>Más estructuradas: los personajes actúan por turnos.</li>
+        <li>
+          Cada turno permite realizar <strong>una acción específica</strong>,
+          como atacar, usar una habilidad o ayudar a un aliado.
+        </li>
+      </ul>
+      <h3>Finalización de escenas</h3>
+      <p>
+        Al finalizar una escena la narrativa avanza hacia una nueva etapa o
+        situación.
+      </p>
+      <!-- Fin del main -->
+    </main>
   </body>
 </html>
